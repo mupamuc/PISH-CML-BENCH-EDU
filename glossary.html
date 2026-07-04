@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Глоссарий · ПИШ ЦИ · Цифровые двойники и инжиниринг БАС</title>
+  <meta name="description" content="Единый словарь терминов цифрового инжиниринга и цифровых двойников по ГОСТ Р 57700.37 и глоссарию ПИШ СПбПУ.">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script>(function(){var t;try{t=localStorage.getItem("theme")}catch(e){}document.documentElement.setAttribute("data-theme",t==="dark"?"dark":"light")})();</script>
+  <link rel="stylesheet" href="assets/theme.css">
+  <style>
+    .g-head{ padding-block: clamp(2.5rem,1.5rem+4vw,4.5rem) 1.5rem; }
+    .g-head h1{ font-size:var(--t-h1); max-width:20ch; }
+    .g-tools{ display:flex; gap:.7rem; flex-wrap:wrap; align-items:center; margin:1.6rem 0 .4rem; }
+    .g-search{ flex:1; min-width:220px; display:flex; align-items:center; gap:.5rem;
+      border:1px solid var(--line-2); border-radius:var(--radius); padding:.55rem .8rem; background:var(--surface); }
+    .g-search input{ border:none; background:transparent; color:var(--text); font:inherit; width:100%; outline:none; }
+    .g-search svg{ width:16px; height:16px; color:var(--text-dim); flex:none; }
+    .fbtn{ font-family:var(--mono); font-size:var(--t-xs); padding:.42rem .8rem; border:1px solid var(--line-2);
+      border-radius:100px; background:transparent; color:var(--text-mut); cursor:pointer; transition:all var(--dur) var(--ease); }
+    .fbtn:hover{ color:var(--text); border-color:var(--cyan-dim); }
+    .fbtn.on{ background:var(--cyan); color:var(--on-accent); border-color:var(--cyan); font-weight:600; }
+    .g-count{ font-family:var(--mono); font-size:var(--t-xs); color:var(--text-dim); }
+
+    .g-cat{ font-family:var(--cond); text-transform:uppercase; letter-spacing:.12em; font-size:var(--t-sm);
+      color:var(--cyan-dim); margin:2rem 0 1rem; padding-bottom:.5rem; border-bottom:1px solid var(--line); }
+    .g-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1rem; }
+    .g-card{ padding:1.2rem; display:flex; flex-direction:column; gap:.5rem; }
+    .g-term{ font-family:var(--cond); font-weight:700; font-size:1.15rem; line-height:1.15; }
+    .g-def{ font-size:var(--t-sm); color:var(--text-mut); line-height:1.5; }
+    .g-meta{ display:flex; gap:.4rem; flex-wrap:wrap; margin-top:auto; padding-top:.4rem; }
+    .g-src{ font-family:var(--mono); font-size:.66rem; letter-spacing:.03em; padding:.22rem .5rem; border-radius:100px;
+      border:1px solid var(--sc); color:var(--sc); }
+    .g-src.gost{ --sc:var(--cyan); } .g-src.pish{ --sc:var(--lime); }
+    .g-src.fea{ --sc:var(--violet); } .g-src.course{ --sc:var(--amber); }
+    .g-empty{ color:var(--text-dim); padding:2rem 0; }
+    mark{ background:color-mix(in oklab,var(--amber) 45%,transparent); color:inherit; border-radius:2px; }
+    .g-note{ font-size:var(--t-sm); color:var(--text-mut); background:var(--bg-2); border-left:3px solid var(--cyan-dim);
+      padding:.8rem 1rem; border-radius:var(--radius); margin-top:1rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="wrap g-head">
+      <div class="kicker">База знаний · надстройка над Moodle</div>
+      <h1 class="mt-s">Глоссарий цифрового инжиниринга</h1>
+      <p class="muted mt-m" style="max-width:64ch">Единый словарь программы. Ядро терминов цифрового двойника — дословно по <b>ГОСТ Р 57700.37-2021</b>; отраслевые термины — по официальному глоссарию <b>ПИШ СПбПУ</b> и <b>fea.ru</b>; расчётные — по курсу. У каждого термина — источник и дисциплина-владелец темы.</p>
+
+      <div class="g-tools">
+        <label class="g-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input id="q" type="search" placeholder="Поиск термина или определения…" autocomplete="off">
+        </label>
+      </div>
+      <div class="g-tools" id="cats"></div>
+      <div class="g-count" id="count"></div>
+    </section>
+
+    <section class="wrap" style="padding-bottom:4rem">
+      <div id="list"></div>
+      <div class="g-note">
+        Приоритет при конфликте источников (правило контроля терминологии): <b>ГОСТ Р 57700.xx → глоссарий ПИШ СПбПУ → курс</b>.
+        Полный официальный глоссарий (150+ терминов): <a href="https://pish.spbstu.ru/article/glossarij" target="_blank" rel="noopener">pish.spbstu.ru/article/glossarij</a>.
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/glossary.js"></script>
+  <script src="assets/ui.js"></script>
+  <script>
+    const G = window.GLOSSARY_FULL;
+    mountNav("glossary.html");
+
+    let curCat = -1, q = "";
+    const catsBox = document.getElementById("cats");
+    catsBox.append(mk("all","Все", curCat===-1, ()=>{curCat=-1;sync();render();}));
+    G.cats.forEach((c,i)=> catsBox.append(mk(i, c, false, ()=>{curCat=i;sync();render();})));
+    function mk(key,label,on,fn){ const b=el("button",{class:"fbtn"+(on?" on":""),"data-c":key,onclick:fn}, label); return b; }
+    function sync(){ catsBox.querySelectorAll(".fbtn").forEach(b=>b.classList.toggle("on", String(b.dataset.c)===String(curCat===-1?"all":curCat))); }
+
+    document.getElementById("q").addEventListener("input", e=>{ q=e.target.value.trim().toLowerCase(); render(); });
+
+    function hl(text){
+      if(!q) return text;
+      const i = text.toLowerCase().indexOf(q);
+      if(i<0) return text;
+      return [text.slice(0,i), el("mark",{},text.slice(i,i+q.length)), text.slice(i+q.length)];
+    }
+
+    function render(){
+      const list = document.getElementById("list"); list.innerHTML="";
+      let shown = 0;
+      G.cats.forEach((cat,ci)=>{
+        if(curCat!==-1 && curCat!==ci) return;
+        let terms = G.terms.filter(t=>t.cat===ci);
+        if(q) terms = terms.filter(t=> (t.t+" "+t.d).toLowerCase().includes(q));
+        if(!terms.length) return;
+        shown += terms.length;
+        list.append(el("div",{class:"g-cat"}, cat));
+        const grid = el("div",{class:"g-grid"});
+        terms.forEach(t=>{
+          const s = G.sources[t.src];
+          grid.append(el("div",{class:"panel g-card hud"},
+            el("div",{class:"g-term"}, ...[].concat(hl(t.t))),
+            el("div",{class:"g-def"}, ...[].concat(hl(t.d))),
+            el("div",{class:"g-meta"},
+              s.url ? el("a",{class:"g-src "+t.src, href:s.url, target:"_blank", rel:"noopener"}, s.label)
+                    : el("span",{class:"g-src "+t.src}, s.label),
+              t.owner ? el("span",{class:"chip",style:"font-size:.66rem"}, t.owner) : null)));
+        });
+        list.append(grid);
+      });
+      if(!shown) list.append(el("div",{class:"g-empty"}, "Ничего не найдено по запросу «"+q+"»."));
+      document.getElementById("count").textContent = shown + " " + plural(shown,"термин","термина","терминов") +
+        (q||curCat!==-1?" (из "+G.terms.length+")":"");
+    }
+    function plural(n,a,b,c){ const m=n%100,d=n%10; if(m>=11&&m<=14)return c; if(d===1)return a; if(d>=2&&d<=4)return b; return c; }
+    render();
+    mountFooter();
+  </script>
+</body>
+</html>

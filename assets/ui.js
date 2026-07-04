@@ -35,6 +35,7 @@
       ["index.html", "Обзор"],
       ["tracker.html", "Трекер проекта"],
       ["app.html", "Кабинеты"],
+      ["glossary.html", "Глоссарий"],
     ];
     const nav = el("nav", { class: "nav" },
       el("div", { class: "nav-in" },
