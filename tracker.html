@@ -68,7 +68,9 @@
   </div>
 
   <script src="assets/data.js"></script>
+  <script src="assets/glossary.js"></script>
   <script src="assets/ui.js"></script>
+  <script src="assets/tooltips.js"></script>
   <script>
     const D = window.DATA;
     mountNav("tracker.html");
@@ -139,6 +141,7 @@
             el("b",{class:"mono",style:"color:var("+(st.id<=t.stage?st.var:"--line-2")+")"},st.tag+" "),
             st.name, st.id===t.stage?el("span",{class:"chip",style:"margin-left:.5rem;color:var("+st.var+")"},"сейчас"):null)))
       );
+      if (window.annotateTerms) annotateTerms(modal);
       ov.classList.add("on");
     }
 
@@ -146,6 +149,7 @@
       if(m>=11&&m<=14)return c; if(d===1)return a; if(d>=2&&d<=4)return b; return c; }
 
     mountFooter();
+    if (window.annotateTerms) annotateTerms(document.querySelector("main"));
   </script>
 </body>
 </html>

@@ -154,7 +154,9 @@
   </main>
 
   <script src="assets/data.js"></script>
+  <script src="assets/glossary.js"></script>
   <script src="assets/ui.js"></script>
+  <script src="assets/tooltips.js"></script>
   <script src="assets/course-vm.js"></script>
   <script src="assets/lecture-cfd.js"></script>
   <script src="assets/discipline.js"></script>
@@ -184,7 +186,7 @@
 
     function render(){
       V.innerHTML="";
-      if(cur==="student" && studentDisc){ V.append(buildDisciplineDetail(studentDisc, backToStudent)); return; }
+      if(cur==="student" && studentDisc){ V.append(buildDisciplineDetail(studentDisc, backToStudent)); if(window.annotateTerms) annotateTerms(V); return; }
       ({student:vStudent,teacher:vTeacher,rop:vRop,dir:vDir}[cur])();
     }
     // сброс детали при смене роли

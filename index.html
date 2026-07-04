@@ -165,7 +165,9 @@
   </main>
 
   <script src="assets/data.js"></script>
+  <script src="assets/glossary.js"></script>
   <script src="assets/ui.js"></script>
+  <script src="assets/tooltips.js"></script>
   <script>
     const D = window.DATA;
     mountNav("index.html");
@@ -245,6 +247,7 @@
         el("div",{class:"dim",style:"font-size:var(--t-sm);margin-top:.4rem"},e.d))));
 
     mountFooter();
+    if (window.annotateTerms) annotateTerms(document.querySelector("main"));
   </script>
 </body>
 </html>

@@ -141,6 +141,7 @@
       body);
     const ov = overlay(modal);
     modal.scrollTop = 0;
+    if (window.annotateTerms) window.annotateTerms(body);
   };
 
   function renderTable(t){

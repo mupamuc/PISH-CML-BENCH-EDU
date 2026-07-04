@@ -233,6 +233,20 @@ footer.site {
   .nav-links { display: none; }
 }
 
+/* термины-тултипы */
+.gloss-term { border-bottom: 1px dashed var(--cyan-dim); cursor: help; }
+.gloss-term:hover, .gloss-term:focus { color: var(--cyan); border-bottom-color: var(--cyan); outline: none; }
+#gloss-tip {
+  position: fixed; z-index: 200; display: none; max-width: 300px;
+  background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius-lg);
+  box-shadow: 0 12px 34px oklch(0% 0 0 / 0.18); padding: 0.9rem 1rem; font-family: var(--sans);
+}
+#gloss-tip .gt-term { font-family: var(--cond); font-weight: 700; font-size: 1rem; line-height: 1.15; }
+#gloss-tip .gt-def { font-size: var(--t-sm); color: var(--text-mut); line-height: 1.45; margin: 0.4rem 0 0.6rem; }
+#gloss-tip .gt-foot { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; }
+#gloss-tip .gt-src { font-family: var(--mono); font-size: 0.62rem; color: var(--cyan-dim); border: 1px solid var(--line-2); border-radius: 100px; padding: 0.15rem 0.45rem; }
+#gloss-tip a { font-family: var(--mono); font-size: var(--t-xs); }
+
 /* переключатель темы */
 .theme-btn {
   display: inline-grid; place-items: center;
