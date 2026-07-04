@@ -22,6 +22,20 @@
   }
   function sumH(list){ return list.reduce((s,t)=>s+(t.hours||0),0); }
 
+  function compColor(code){ return code.startsWith("УК")?"var(--cyan-dim)":code.startsWith("ОПК")?"var(--violet)":"var(--brand-2)"; }
+  function compChips(code){
+    const DB = window.DB; if (!DB || !DB.disc_comp) return null;
+    const codes = DB.disc_comp.filter(x => x.discipline_code === code).map(x => x.competency_code);
+    if (!codes.length) return null;
+    const byc = {}; DB.competencies.forEach(c => byc[c.code] = c);
+    const row = E("div",{class:"flex gap-s wrap-w"});
+    codes.forEach(cc => row.append(E("span",{class:"chip",style:"color:"+compColor(cc),title:(byc[cc]||{}).text||""}, cc)));
+    return E("div",{class:"panel card hud mt-m"},
+      E("h3",{}, E("span",{},"Компетенции"), E("span",{class:"chip",style:"color:var(--amber)"},"демо · по ФГОС 15.04.03")),
+      row,
+      E("div",{class:"dim",style:"font-size:var(--t-xs);margin-top:.5rem"},"наведи на код — расшифровка"));
+  }
+
   const ICON = {
     read:  "Читать в платформе",
     quiz:  "Пройти самоконтроль",
@@ -58,6 +72,7 @@
           E("div",{class:"flex gap-m wrap-w mt-m"},
             E("a",{class:"btn btn-ghost",href:"#"}, "Открыть в Moodle (LTI) →"),
             E("span",{class:"chip",style:"color:var(--cyan-dim)"}, "источник: РПД + учебный план"))));
+        { const cc = compChips(code); if (cc) wrap.append(cc); }
 
         const lec = tps.filter(t=>t.kind==="lecture").sort((a,b)=>a.num-b.num);
         const pr  = tps.filter(t=>t.kind==="practice").sort((a,b)=>a.num-b.num);
@@ -107,6 +122,7 @@
       E("div",{class:"flex gap-m wrap-w mt-m"},
         E("a",{class:"btn btn-ghost",href:c.moodle}, "Открыть в Moodle (LTI) →"),
         E("span",{class:"chip",style:"color:var(--brand-2)"}, E("i",{class:"dot"}), "надстройка: контент читается в платформе"))));
+    { const cc = compChips(c.code); if (cc) wrap.append(cc); }
 
     // программа (16 тем)
     const syl = E("div",{class:"panel card hud mt-m"},

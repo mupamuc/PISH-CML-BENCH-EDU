@@ -2408,14 +2408,951 @@
    "users": "Все дисциплины, проект"
   }
  ],
+ "competencies": [
+  {
+   "code": "УК-1",
+   "kind": "УК",
+   "text": "Системное и критическое мышление"
+  },
+  {
+   "code": "УК-2",
+   "kind": "УК",
+   "text": "Разработка и реализация проектов"
+  },
+  {
+   "code": "УК-3",
+   "kind": "УК",
+   "text": "Командная работа и лидерство"
+  },
+  {
+   "code": "УК-4",
+   "kind": "УК",
+   "text": "Деловая коммуникация, в т.ч. на иностранном языке"
+  },
+  {
+   "code": "УК-6",
+   "kind": "УК",
+   "text": "Самоорганизация и саморазвитие"
+  },
+  {
+   "code": "ОПК-1",
+   "kind": "ОПК",
+   "text": "Применение фундаментальных знаний математики и естественных наук"
+  },
+  {
+   "code": "ОПК-2",
+   "kind": "ОПК",
+   "text": "Разработка математических моделей процессов и объектов"
+  },
+  {
+   "code": "ОПК-3",
+   "kind": "ОПК",
+   "text": "Современные ИКТ и ПО в профессиональной деятельности"
+  },
+  {
+   "code": "ОПК-4",
+   "kind": "ОПК",
+   "text": "Теоретические и экспериментальные исследования"
+  },
+  {
+   "code": "ПК-1",
+   "kind": "ПК",
+   "text": "Постановка и решение задач вычислительной механики (МКЭ/МКО)"
+  },
+  {
+   "code": "ПК-2",
+   "kind": "ПК",
+   "text": "Расчёт прочности, устойчивости и динамики конструкций БАС"
+  },
+  {
+   "code": "ПК-3",
+   "kind": "ПК",
+   "text": "Аэродинамический расчёт и мультифизика"
+  },
+  {
+   "code": "ПК-4",
+   "kind": "ПК",
+   "text": "Разработка и валидация цифровых двойников (ГОСТ Р 57700)"
+  },
+  {
+   "code": "ПК-5",
+   "kind": "ПК",
+   "text": "Проектирование БАС и системная инженерия"
+  },
+  {
+   "code": "ПК-6",
+   "kind": "ПК",
+   "text": "Технологии и производство композитных конструкций"
+  }
+ ],
+ "disc_comp": [
+  {
+   "discipline_code": "К.М.01.01",
+   "competency_code": "УК-4"
+  },
+  {
+   "discipline_code": "К.М.01.01",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.01.02",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.01.ДВ.01.01",
+   "competency_code": "ОПК-3"
+  },
+  {
+   "discipline_code": "К.М.01.ДВ.01.01",
+   "competency_code": "ПК-1"
+  },
+  {
+   "discipline_code": "К.М.01.ДВ.01.01",
+   "competency_code": "УК-2"
+  },
+  {
+   "discipline_code": "К.М.01.ДВ.01.01",
+   "competency_code": "УК-3"
+  },
+  {
+   "discipline_code": "К.М.01.ДВ.01.01",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.01.ДВ.01.02",
+   "competency_code": "ОПК-3"
+  },
+  {
+   "discipline_code": "К.М.01.ДВ.01.02",
+   "competency_code": "ПК-1"
+  },
+  {
+   "discipline_code": "К.М.01.ДВ.01.02",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.02.01.01",
+   "competency_code": "ОПК-1"
+  },
+  {
+   "discipline_code": "К.М.02.01.01",
+   "competency_code": "ОПК-2"
+  },
+  {
+   "discipline_code": "К.М.02.01.01",
+   "competency_code": "ПК-1"
+  },
+  {
+   "discipline_code": "К.М.02.01.01",
+   "competency_code": "ПК-2"
+  },
+  {
+   "discipline_code": "К.М.02.01.01",
+   "competency_code": "УК-1"
+  },
+  {
+   "discipline_code": "К.М.02.01.01",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.02.01.02",
+   "competency_code": "ОПК-1"
+  },
+  {
+   "discipline_code": "К.М.02.01.02",
+   "competency_code": "ОПК-2"
+  },
+  {
+   "discipline_code": "К.М.02.01.02",
+   "competency_code": "ПК-1"
+  },
+  {
+   "discipline_code": "К.М.02.01.02",
+   "competency_code": "ПК-2"
+  },
+  {
+   "discipline_code": "К.М.02.01.02",
+   "competency_code": "УК-1"
+  },
+  {
+   "discipline_code": "К.М.02.01.02",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.02.02.01",
+   "competency_code": "ОПК-1"
+  },
+  {
+   "discipline_code": "К.М.02.02.01",
+   "competency_code": "ОПК-2"
+  },
+  {
+   "discipline_code": "К.М.02.02.01",
+   "competency_code": "ПК-1"
+  },
+  {
+   "discipline_code": "К.М.02.02.01",
+   "competency_code": "ПК-2"
+  },
+  {
+   "discipline_code": "К.М.02.02.01",
+   "competency_code": "УК-1"
+  },
+  {
+   "discipline_code": "К.М.02.02.01",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.02.02.02",
+   "competency_code": "ОПК-1"
+  },
+  {
+   "discipline_code": "К.М.02.02.02",
+   "competency_code": "ОПК-2"
+  },
+  {
+   "discipline_code": "К.М.02.02.02",
+   "competency_code": "ПК-1"
+  },
+  {
+   "discipline_code": "К.М.02.02.02",
+   "competency_code": "ПК-2"
+  },
+  {
+   "discipline_code": "К.М.02.02.02",
+   "competency_code": "УК-1"
+  },
+  {
+   "discipline_code": "К.М.02.02.02",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.02.03.01",
+   "competency_code": "ОПК-1"
+  },
+  {
+   "discipline_code": "К.М.02.03.01",
+   "competency_code": "ОПК-2"
+  },
+  {
+   "discipline_code": "К.М.02.03.01",
+   "competency_code": "ПК-1"
+  },
+  {
+   "discipline_code": "К.М.02.03.01",
+   "competency_code": "ПК-2"
+  },
+  {
+   "discipline_code": "К.М.02.03.01",
+   "competency_code": "УК-1"
+  },
+  {
+   "discipline_code": "К.М.02.03.01",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.02.03.02",
+   "competency_code": "ОПК-1"
+  },
+  {
+   "discipline_code": "К.М.02.03.02",
+   "competency_code": "ОПК-2"
+  },
+  {
+   "discipline_code": "К.М.02.03.02",
+   "competency_code": "ПК-1"
+  },
+  {
+   "discipline_code": "К.М.02.03.02",
+   "competency_code": "ПК-2"
+  },
+  {
+   "discipline_code": "К.М.02.03.02",
+   "competency_code": "УК-1"
+  },
+  {
+   "discipline_code": "К.М.02.03.02",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.02.03.03",
+   "competency_code": "ПК-5"
+  },
+  {
+   "discipline_code": "К.М.02.03.03",
+   "competency_code": "УК-2"
+  },
+  {
+   "discipline_code": "К.М.02.03.03",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.02.03.04",
+   "competency_code": "ПК-5"
+  },
+  {
+   "discipline_code": "К.М.02.03.04",
+   "competency_code": "УК-2"
+  },
+  {
+   "discipline_code": "К.М.02.03.04",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.02.03.05",
+   "competency_code": "ПК-5"
+  },
+  {
+   "discipline_code": "К.М.02.03.05",
+   "competency_code": "УК-2"
+  },
+  {
+   "discipline_code": "К.М.02.03.05",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.02.04.01",
+   "competency_code": "ОПК-3"
+  },
+  {
+   "discipline_code": "К.М.02.04.01",
+   "competency_code": "ПК-1"
+  },
+  {
+   "discipline_code": "К.М.02.04.01",
+   "competency_code": "УК-2"
+  },
+  {
+   "discipline_code": "К.М.02.04.01",
+   "competency_code": "УК-3"
+  },
+  {
+   "discipline_code": "К.М.02.04.01",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.02.04.02",
+   "competency_code": "УК-2"
+  },
+  {
+   "discipline_code": "К.М.02.04.02",
+   "competency_code": "УК-3"
+  },
+  {
+   "discipline_code": "К.М.02.04.02",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.02.04.03.01",
+   "competency_code": "УК-2"
+  },
+  {
+   "discipline_code": "К.М.02.04.03.01",
+   "competency_code": "УК-3"
+  },
+  {
+   "discipline_code": "К.М.02.04.03.01",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.02.04.ДВ.01.01",
+   "competency_code": "УК-2"
+  },
+  {
+   "discipline_code": "К.М.02.04.ДВ.01.01",
+   "competency_code": "УК-3"
+  },
+  {
+   "discipline_code": "К.М.02.04.ДВ.01.01",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.02.04.ДВ.01.02",
+   "competency_code": "УК-2"
+  },
+  {
+   "discipline_code": "К.М.02.04.ДВ.01.02",
+   "competency_code": "УК-3"
+  },
+  {
+   "discipline_code": "К.М.02.04.ДВ.01.02",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.02.04.ДВ.01.03",
+   "competency_code": "УК-2"
+  },
+  {
+   "discipline_code": "К.М.02.04.ДВ.01.03",
+   "competency_code": "УК-3"
+  },
+  {
+   "discipline_code": "К.М.02.04.ДВ.01.03",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.03.01.01",
+   "competency_code": "ОПК-1"
+  },
+  {
+   "discipline_code": "К.М.03.01.01",
+   "competency_code": "ОПК-2"
+  },
+  {
+   "discipline_code": "К.М.03.01.01",
+   "competency_code": "ОПК-4"
+  },
+  {
+   "discipline_code": "К.М.03.01.01",
+   "competency_code": "ПК-4"
+  },
+  {
+   "discipline_code": "К.М.03.01.01",
+   "competency_code": "УК-1"
+  },
+  {
+   "discipline_code": "К.М.03.01.01",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.03.01.02",
+   "competency_code": "ОПК-1"
+  },
+  {
+   "discipline_code": "К.М.03.01.02",
+   "competency_code": "ОПК-2"
+  },
+  {
+   "discipline_code": "К.М.03.01.02",
+   "competency_code": "ПК-1"
+  },
+  {
+   "discipline_code": "К.М.03.01.02",
+   "competency_code": "ПК-2"
+  },
+  {
+   "discipline_code": "К.М.03.01.02",
+   "competency_code": "ПК-4"
+  },
+  {
+   "discipline_code": "К.М.03.01.02",
+   "competency_code": "ПК-5"
+  },
+  {
+   "discipline_code": "К.М.03.01.02",
+   "competency_code": "УК-1"
+  },
+  {
+   "discipline_code": "К.М.03.01.02",
+   "competency_code": "УК-2"
+  },
+  {
+   "discipline_code": "К.М.03.01.02",
+   "competency_code": "УК-3"
+  },
+  {
+   "discipline_code": "К.М.03.01.02",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.03.01.03",
+   "competency_code": "ПК-5"
+  },
+  {
+   "discipline_code": "К.М.03.01.03",
+   "competency_code": "УК-2"
+  },
+  {
+   "discipline_code": "К.М.03.01.03",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.03.01.04",
+   "competency_code": "ОПК-1"
+  },
+  {
+   "discipline_code": "К.М.03.01.04",
+   "competency_code": "ОПК-2"
+  },
+  {
+   "discipline_code": "К.М.03.01.04",
+   "competency_code": "ПК-3"
+  },
+  {
+   "discipline_code": "К.М.03.01.04",
+   "competency_code": "УК-1"
+  },
+  {
+   "discipline_code": "К.М.03.01.04",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.03.01.05",
+   "competency_code": "ОПК-1"
+  },
+  {
+   "discipline_code": "К.М.03.01.05",
+   "competency_code": "ОПК-2"
+  },
+  {
+   "discipline_code": "К.М.03.01.05",
+   "competency_code": "ПК-3"
+  },
+  {
+   "discipline_code": "К.М.03.01.05",
+   "competency_code": "УК-1"
+  },
+  {
+   "discipline_code": "К.М.03.01.05",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.03.01.06",
+   "competency_code": "ОПК-1"
+  },
+  {
+   "discipline_code": "К.М.03.01.06",
+   "competency_code": "ОПК-2"
+  },
+  {
+   "discipline_code": "К.М.03.01.06",
+   "competency_code": "ПК-1"
+  },
+  {
+   "discipline_code": "К.М.03.01.06",
+   "competency_code": "ПК-2"
+  },
+  {
+   "discipline_code": "К.М.03.01.06",
+   "competency_code": "ПК-6"
+  },
+  {
+   "discipline_code": "К.М.03.01.06",
+   "competency_code": "УК-1"
+  },
+  {
+   "discipline_code": "К.М.03.01.06",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.03.01.07",
+   "competency_code": "ОПК-1"
+  },
+  {
+   "discipline_code": "К.М.03.01.07",
+   "competency_code": "ОПК-2"
+  },
+  {
+   "discipline_code": "К.М.03.01.07",
+   "competency_code": "ОПК-3"
+  },
+  {
+   "discipline_code": "К.М.03.01.07",
+   "competency_code": "ПК-1"
+  },
+  {
+   "discipline_code": "К.М.03.01.07",
+   "competency_code": "ПК-5"
+  },
+  {
+   "discipline_code": "К.М.03.01.07",
+   "competency_code": "УК-1"
+  },
+  {
+   "discipline_code": "К.М.03.01.07",
+   "competency_code": "УК-2"
+  },
+  {
+   "discipline_code": "К.М.03.01.07",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.03.01.08",
+   "competency_code": "ОПК-1"
+  },
+  {
+   "discipline_code": "К.М.03.01.08",
+   "competency_code": "ОПК-2"
+  },
+  {
+   "discipline_code": "К.М.03.01.08",
+   "competency_code": "ОПК-3"
+  },
+  {
+   "discipline_code": "К.М.03.01.08",
+   "competency_code": "ПК-1"
+  },
+  {
+   "discipline_code": "К.М.03.01.08",
+   "competency_code": "УК-1"
+  },
+  {
+   "discipline_code": "К.М.03.01.08",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.03.02.01",
+   "competency_code": "ОПК-3"
+  },
+  {
+   "discipline_code": "К.М.03.02.01",
+   "competency_code": "ПК-1"
+  },
+  {
+   "discipline_code": "К.М.03.02.01",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.03.02.02",
+   "competency_code": "ОПК-1"
+  },
+  {
+   "discipline_code": "К.М.03.02.02",
+   "competency_code": "ОПК-2"
+  },
+  {
+   "discipline_code": "К.М.03.02.02",
+   "competency_code": "ОПК-4"
+  },
+  {
+   "discipline_code": "К.М.03.02.02",
+   "competency_code": "ПК-4"
+  },
+  {
+   "discipline_code": "К.М.03.02.02",
+   "competency_code": "УК-1"
+  },
+  {
+   "discipline_code": "К.М.03.02.02",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.03.02.03",
+   "competency_code": "ПК-6"
+  },
+  {
+   "discipline_code": "К.М.03.02.03",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.03.02.04",
+   "competency_code": "ОПК-3"
+  },
+  {
+   "discipline_code": "К.М.03.02.04",
+   "competency_code": "ПК-1"
+  },
+  {
+   "discipline_code": "К.М.03.02.04",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.03.02.05",
+   "competency_code": "ОПК-3"
+  },
+  {
+   "discipline_code": "К.М.03.02.05",
+   "competency_code": "ПК-1"
+  },
+  {
+   "discipline_code": "К.М.03.02.05",
+   "competency_code": "ПК-5"
+  },
+  {
+   "discipline_code": "К.М.03.02.05",
+   "competency_code": "УК-2"
+  },
+  {
+   "discipline_code": "К.М.03.02.05",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.03.ДВ.01.01",
+   "competency_code": "УК-2"
+  },
+  {
+   "discipline_code": "К.М.03.ДВ.01.01",
+   "competency_code": "УК-3"
+  },
+  {
+   "discipline_code": "К.М.03.ДВ.01.01",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.03.ДВ.01.02",
+   "competency_code": "УК-2"
+  },
+  {
+   "discipline_code": "К.М.03.ДВ.01.02",
+   "competency_code": "УК-3"
+  },
+  {
+   "discipline_code": "К.М.03.ДВ.01.02",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.04.ДВ.01.01",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.04.ДВ.01.02",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.05.01.01",
+   "competency_code": "ПК-4"
+  },
+  {
+   "discipline_code": "К.М.05.01.01",
+   "competency_code": "ПК-5"
+  },
+  {
+   "discipline_code": "К.М.05.01.01",
+   "competency_code": "УК-2"
+  },
+  {
+   "discipline_code": "К.М.05.01.01",
+   "competency_code": "УК-3"
+  },
+  {
+   "discipline_code": "К.М.05.01.01",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.05.02(У)",
+   "competency_code": "ПК-4"
+  },
+  {
+   "discipline_code": "К.М.05.02(У)",
+   "competency_code": "ПК-5"
+  },
+  {
+   "discipline_code": "К.М.05.02(У)",
+   "competency_code": "УК-2"
+  },
+  {
+   "discipline_code": "К.М.05.02(У)",
+   "competency_code": "УК-3"
+  },
+  {
+   "discipline_code": "К.М.05.02(У)",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.05.03(П)",
+   "competency_code": "ПК-4"
+  },
+  {
+   "discipline_code": "К.М.05.03(П)",
+   "competency_code": "ПК-5"
+  },
+  {
+   "discipline_code": "К.М.05.03(П)",
+   "competency_code": "УК-2"
+  },
+  {
+   "discipline_code": "К.М.05.03(П)",
+   "competency_code": "УК-3"
+  },
+  {
+   "discipline_code": "К.М.05.03(П)",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.05.04(П)",
+   "competency_code": "ПК-4"
+  },
+  {
+   "discipline_code": "К.М.05.04(П)",
+   "competency_code": "ПК-5"
+  },
+  {
+   "discipline_code": "К.М.05.04(П)",
+   "competency_code": "УК-2"
+  },
+  {
+   "discipline_code": "К.М.05.04(П)",
+   "competency_code": "УК-3"
+  },
+  {
+   "discipline_code": "К.М.05.04(П)",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.05.05(Пд)",
+   "competency_code": "ПК-4"
+  },
+  {
+   "discipline_code": "К.М.05.05(Пд)",
+   "competency_code": "ПК-5"
+  },
+  {
+   "discipline_code": "К.М.05.05(Пд)",
+   "competency_code": "УК-2"
+  },
+  {
+   "discipline_code": "К.М.05.05(Пд)",
+   "competency_code": "УК-3"
+  },
+  {
+   "discipline_code": "К.М.05.05(Пд)",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "К.М.06.01(Д)",
+   "competency_code": "ПК-4"
+  },
+  {
+   "discipline_code": "К.М.06.01(Д)",
+   "competency_code": "ПК-5"
+  },
+  {
+   "discipline_code": "К.М.06.01(Д)",
+   "competency_code": "УК-2"
+  },
+  {
+   "discipline_code": "К.М.06.01(Д)",
+   "competency_code": "УК-3"
+  },
+  {
+   "discipline_code": "К.М.06.01(Д)",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "ФТД.01",
+   "competency_code": "УК-6"
+  },
+  {
+   "discipline_code": "ФТД.02",
+   "competency_code": "УК-6"
+  }
+ ],
+ "dups": [
+  {
+   "discipline_code": "К.М.02.01.02",
+   "topic_title": "Компьютерный инжиниринг и цифровой двойник: место вычислительной механики в разработке изделия; матрица целевых показателей и ресурсных ограничений",
+   "theme": "Цифровой двойник: определение по ГОСТ Р 57700.37, жизненный цикл модели, матрица целевых показателей и ресурсных ограничений, достоверность",
+   "owner_code": "К.М.03.01.01",
+   "score": 7
+  },
+  {
+   "discipline_code": "К.М.02.03.03",
+   "topic_title": "Матрица целевых показателей и ресурсных ограничений как заготовка цифрового двойника",
+   "theme": "Цифровой двойник: определение по ГОСТ Р 57700.37, жизненный цикл модели, матрица целевых показателей и ресурсных ограничений, достоверность",
+   "owner_code": "К.М.03.01.01",
+   "score": 7
+  },
+  {
+   "discipline_code": "К.М.03.01.01",
+   "topic_title": "Виртуальные (цифровые) испытания и их роль в допуске изделия (доказательная база детально - в «Цифровой сертификации БАС»)",
+   "theme": "Достоверность расчета и доказательная база сертификации, виртуальные (цифровые) испытания, нормы летной годности",
+   "owner_code": "К.М.03.02.02",
+   "score": 5
+  },
+  {
+   "discipline_code": "К.М.03.02.05",
+   "topic_title": "Управление требованиями и прослеживаемость; связь матрицы прослеживаемости с матрицей целевых показателей и ресурсных ограничений",
+   "theme": "Цифровой двойник: определение по ГОСТ Р 57700.37, жизненный цикл модели, матрица целевых показателей и ресурсных ограничений, достоверность",
+   "owner_code": "К.М.03.01.01",
+   "score": 5
+  },
+  {
+   "discipline_code": "К.М.02.01.02",
+   "topic_title": "Метод конечных объемов и конечных разностей: где какой метод применяют (обзор для потока и тепла)",
+   "theme": "Аэродинамика и вычислительная аэрогидродинамика (CFD): профиль, крыло, поляра, турбулентность, сетки для потока; метод конечных объемов как рабочий метод для потока",
+   "owner_code": "К.М.03.01.05",
+   "score": 4
+  },
+  {
+   "discipline_code": "К.М.02.02.01",
+   "topic_title": "Концентрация напряжений и переход к трещине; постановка задач механики разрушения",
+   "theme": "Постановка задач механики: напряжения, деформации, определяющие соотношения, упругость и пластичность",
+   "owner_code": "К.М.02.01.01",
+   "score": 4
+  },
+  {
+   "discipline_code": "К.М.03.01.02",
+   "topic_title": "Верификация решения: исследование сеточной сходимости, оценка погрешности дискретизации (отдельно от невязки решателя), сверка с аналитическим эталоном; протокол расчета",
+   "theme": "Численный метод: метод конечных элементов (МКЭ); идея метода конечных объемов и конечных разностей (обзорно); сетки, сходимость, погрешность, верификация решения",
+   "owner_code": "К.М.02.01.02",
+   "score": 4
+  },
+  {
+   "discipline_code": "К.М.03.01.05",
+   "topic_title": "Метод конечных объемов для потока: консервативность, дискретизация конвекции и диффузии, схемы первого и второго порядка, численная (схемная) диффузия, связь давление-скорость",
+   "theme": "Численный метод: метод конечных элементов (МКЭ); идея метода конечных объемов и конечных разностей (обзорно); сетки, сходимость, погрешность, верификация решения",
+   "owner_code": "К.М.02.01.02",
+   "score": 4
+  },
+  {
+   "discipline_code": "К.М.02.01.01",
+   "topic_title": "Энергетические принципы и вариационные формулировки (принцип возможных перемещений, принцип минимума полной потенциальной энергии) - основа метода конечных элементов",
+   "theme": "Численный метод: метод конечных элементов (МКЭ); идея метода конечных объемов и конечных разностей (обзорно); сетки, сходимость, погрешность, верификация решения",
+   "owner_code": "К.М.02.01.02",
+   "score": 3
+  },
+  {
+   "discipline_code": "К.М.02.02.02",
+   "topic_title": "Виды динамических нагрузок на БПЛА: удар, вибрация, порыв, посадка, отделение полезного груза",
+   "theme": "Внешние нагрузки: маневр, порыв, посадка, наземные; расчетные случаи и нормы прочности",
+   "owner_code": "К.М.02.03.02",
+   "score": 3
+  },
+  {
+   "discipline_code": "К.М.02.03.02",
+   "topic_title": "Нормы прочности и расчетные случаи нагружения БПЛА; эксплуатационная и расчетная нагрузка, коэффициент безопасности и связь между ними",
+   "theme": "Усталость, ресурс, ударные и динамические нагрузки, случаи повторных нагружений",
+   "owner_code": "К.М.02.02.02",
+   "score": 3
+  },
+  {
+   "discipline_code": "К.М.03.01.03",
+   "topic_title": "Требования миссии и целевые показатели; матрица требований к изделию",
+   "theme": "Цифровой двойник: определение по ГОСТ Р 57700.37, жизненный цикл модели, матрица целевых показателей и ресурсных ограничений, достоверность",
+   "owner_code": "К.М.03.01.01",
+   "score": 3
+  },
+  {
+   "discipline_code": "К.М.02.03.04",
+   "topic_title": "Защита эскизного и технического проектов",
+   "theme": "Стадии разработки: техническое задание, эскизный, технический, рабочий проект, опытный образец",
+   "owner_code": "К.М.02.03.03",
+   "score": 3
+  },
+  {
+   "discipline_code": "К.М.02.03.04",
+   "topic_title": "Увязка результатов расчетных дисциплин (нагрузки, прочность, аэродинамика) в единый проект",
+   "theme": "Внешние нагрузки: маневр, порыв, посадка, наземные; расчетные случаи и нормы прочности",
+   "owner_code": "К.М.02.03.02",
+   "score": 3
+  },
+  {
+   "discipline_code": "К.М.02.03.04",
+   "topic_title": "Обновление цифрового двойника изделия; проверка по матрице требований",
+   "theme": "Цифровой двойник: определение по ГОСТ Р 57700.37, жизненный цикл модели, матрица целевых показателей и ресурсных ограничений, достоверность",
+   "owner_code": "К.М.03.01.01",
+   "score": 3
+  },
+  {
+   "discipline_code": "К.М.02.03.05",
+   "topic_title": "Отработка конструкции на технологичность и разработка технологической документации (маршрут, оснастка); изготовление деталей - на технологической практике и в дисциплине технологий композитов",
+   "theme": "Технология изготовления композитов: препрег, анизопринтинг, автоклав, контроль качества укладки",
+   "owner_code": "К.М.03.02.03",
+   "score": 3
+  }
+ ],
  "meta": {
   "source_plan": "g15.04.03_15_ПИШ_2026.plx",
+  "competencies_demo": true,
   "counts": {
    "modules": 7,
    "disciplines": 44,
    "with_rpd": 28,
    "topics": 224,
-   "ownership": 23
+   "ownership": 23,
+   "competencies": 15,
+   "disc_comp": 185,
+   "dups": 16
   }
  }
 }

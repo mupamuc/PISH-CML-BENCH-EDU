@@ -375,23 +375,65 @@
 
     /* ——— РОП ——— */
     function vRop(){
+      const DB=window.DB, c=(DB&&DB.meta.counts)||{};
       V.append(head("Кабинет РОП · руководитель образовательной программы","Трекинг когорты и развитие плана",
-        "4 команды · 18 студентов · семестр 1"));
+        "4 команды · 18 студентов · семестр 1 · данные плана и РПД — из БД"));
       V.append(el("div",{class:"kpi",style:"margin-bottom:1rem"},
-        kpi("4","команды"), kpi("1","в зоне риска"), kpi("3","дубля тем найдено"), kpi("6","пробелов плана")));
+        kpi(String(c.disciplines||44),"дисциплин в БД"),
+        kpi(String(c.with_rpd||28),"с распарсенной РПД"),
+        kpi(String((DB&&DB.dups.length)||0),"кандидатов-дублей"),
+        kpi(String(c.ownership||23),"тем в карте владения")));
       V.append(el("div",{class:"cols c2"},
         card("Тепловая карта · команды × стадии артефактов",null, heat()),
-        el("div",{class:"cols",style:"gap:1rem"},
-          card("РПД-контур · дубли против карты владения",el("span",{class:"chip",style:"color:var(--amber)"},"ИИ-разбор"),
-            dupRow("CFD-раздел","К.М.03.01.05","дублируется в РПД К.М.03.01.04","risk"),
-            dupRow("Метод конечных элементов","К.М.02.01.02","повтор в 2 РПД профиля","warn"),
-            dupRow("Критерии разрушения композита","К.М.03.01.06","корректно, без повторов","ok"),
-            el("p",{class:"note mt-s"},"ИИ находит — РОП подтверждает. Владелец темы читает, потребитель применяет.")),
-          card("Развитие программы · пробелы плана",el("span",{class:"chip"},"из аналитики"),
-            ...D.GAPS.map(g=>el("div",{class:"li"},
-              el("span",{},g.t),
-              el("span",{class:"tag chip",style:"color:"+(g.pr==="высокий"?"var(--rose)":"var(--amber)")},g.pr))))
-      )));
+        dupCard()));
+      V.append(el("div",{class:"cols c2",style:"margin-top:1rem"},
+        compCoverageCard(),
+        card("Развитие программы · пробелы плана",el("span",{class:"chip"},"из аналитики"),
+          ...D.GAPS.map(g=>el("div",{class:"li"},
+            el("span",{},g.t),
+            el("span",{class:"tag chip",style:"color:"+(g.pr==="высокий"?"var(--rose)":"var(--amber)")},g.pr))))));
+    }
+    function shortTheme(t){ return t && t.length>46 ? t.slice(0,46)+"…" : (t||""); }
+    function compColorJs(code){ return code.startsWith("УК")?"var(--cyan-dim)":code.startsWith("ОПК")?"var(--violet)":"var(--brand-2)"; }
+    function dupCard(){
+      const DB=window.DB;
+      const box=el("div",{class:"panel card hud"},
+        el("h3",{}, el("span",{},"РПД-контур · дубли против карты владения"),
+          el("span",{class:"chip",style:"color:var(--amber)"},"живой детектор")),
+        el("p",{class:"note",style:"margin-bottom:.6rem"},
+          "Тема излагается вне дисциплины-владельца → кандидат на дубль. Считается из БД по карте владения; РОП подтверждает."));
+      if(!DB||!DB.dups||!DB.dups.length){ box.append(el("div",{class:"dim"},"нет данных БД")); return box; }
+      DB.dups.slice(0,7).forEach(d=>{
+        const sev = d.score>=6?"risk": d.score>=4?"warn":"ok";
+        box.append(el("div",{class:"li"},
+          el("span",{}, el("b",{class:"mono",style:"font-size:var(--t-xs);color:var(--cyan-dim)"},d.discipline_code+" "),
+            shortTheme(d.theme),
+            el("div",{class:"note"},"владелец темы: "+d.owner_code+" · совпадений: "+d.score)),
+          el("span",{class:"tag chip",style:"color:"+riskColor(sev)}, el("i",{class:"dot"}),
+            sev==="risk"?"дубль":sev==="warn"?"проверить":"слабое")));
+      });
+      return box;
+    }
+    function compCoverageCard(){
+      const DB=window.DB;
+      const box=el("div",{class:"panel card hud"},
+        el("h3",{}, el("span",{},"Покрытие компетенций"),
+          el("span",{class:"chip",style:"color:var(--amber)"},"демо · ФГОС 15.04.03")));
+      if(!DB||!DB.competencies){ box.append(el("div",{class:"dim"},"нет данных БД")); return box; }
+      const cnt={}; DB.disc_comp.forEach(x=>cnt[x.competency_code]=(cnt[x.competency_code]||0)+1);
+      const max=Math.max(1,...Object.values(cnt));
+      DB.competencies.slice().sort((a,b)=>a.code.localeCompare(b.code,'ru')).forEach(cp=>{
+        const n=cnt[cp.code]||0;
+        const col = n===0?"var(--rose)": n<=2?"var(--amber)":"var(--brand-2)";
+        box.append(el("div",{style:"margin:.35rem 0"},
+          el("div",{class:"flex between",style:"font-size:var(--t-sm);margin-bottom:.2rem;gap:.5rem"},
+            el("span",{title:cp.text,style:"overflow:hidden;text-overflow:ellipsis;white-space:nowrap"},
+              el("b",{class:"mono",style:"color:"+compColorJs(cp.code)},cp.code)," "+shortTheme(cp.text)),
+            el("span",{class:"mono dim"},n)),
+          el("div",{class:"bar"}, el("i",{style:"width:"+Math.round(n/max*100)+"%;background:"+col}))));
+      });
+      box.append(el("p",{class:"note mt-s"},"Красное — компетенция не покрыта (пробел); жёлтое — покрыта слабо (≤2 дисциплин)."));
+      return box;
     }
     function heat(){
       const teams=D.TEAMS;
