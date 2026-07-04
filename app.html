@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Кабинеты платформы · ПИШ ЦИ БАС</title>
   <meta name="description" content="Кликабельный прототип кабинетов: студент, преподаватель, РОП, директор.">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <script>(function(){var t;try{t=localStorage.getItem("theme")}catch(e){}document.documentElement.setAttribute("data-theme",t==="dark"?"dark":"light")})();</script>
   <link rel="stylesheet" href="assets/theme.css">
   <style>
@@ -49,7 +52,11 @@
     .chat{ display:flex; flex-direction:column; gap:.8rem; }
     .msg{ padding:.8rem 1rem; border-radius:var(--radius-lg); max-width:88%; font-size:var(--t-sm); line-height:1.5; }
     .msg.ai{ background:var(--surface-2); border:1px solid var(--line); align-self:flex-start; }
-    .msg.u{ background:oklch(80% .13 205 / .14); border:1px solid var(--cyan-dim); align-self:flex-end; }
+    .msg.u{ background:color-mix(in oklab, var(--brand) 14%, transparent); border:1px solid var(--cyan-dim); align-self:flex-end; }
+    .radar-grid{ stroke:var(--line-2); fill:none; }
+    .radar-axis{ fill:var(--text-mut); }
+    .radar-poly{ fill:color-mix(in oklab, var(--brand) 22%, transparent); stroke:var(--cyan); }
+    .radar-dot{ fill:var(--cyan); }
     .msg .who{ font-family:var(--mono); font-size:var(--t-xs); color:var(--cyan-dim); margin-bottom:.3rem; }
     .qchips{ display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.6rem; }
     .qchip{ font-size:var(--t-xs); font-family:var(--mono); padding:.35rem .7rem; border:1px solid var(--line-2);
@@ -143,13 +150,13 @@
       const pt=(i,r)=>[cx+r*Math.cos(-Math.PI/2+i*2*Math.PI/N), cy+r*Math.sin(-Math.PI/2+i*2*Math.PI/N)];
       let grid="",poly="",labels="";
       [.25,.5,.75,1].forEach(g=>{ let p=axes.map((_,i)=>pt(i,R*g).join(",")).join(" ");
-        grid+=`<polygon points="${p}" fill="none" stroke="oklch(40% .03 250)" stroke-width=".5"/>`; });
+        grid+=`<polygon points="${p}" class="radar-grid" stroke-width=".5"/>`; });
       poly=axes.map((_,i)=>pt(i,R*vals[i]).join(",")).join(" ");
       axes.forEach((a,i)=>{ const[x,y]=pt(i,R+16);
-        labels+=`<text x="${x}" y="${y}" fill="oklch(72% .02 250)" font-size="8" text-anchor="middle" font-family="monospace">${a}</text>`; });
+        labels+=`<text x="${x}" y="${y}" class="radar-axis" font-size="8" text-anchor="middle" font-family="var(--mono)">${a}</text>`; });
       const svg=`<svg viewBox="0 0 240 240" width="240" height="240" role="img" aria-label="радар компетенций">
-        ${grid}<polygon points="${poly}" fill="oklch(80% .13 205 / .22)" stroke="var(--cyan)" stroke-width="1.5"/>
-        ${axes.map((_,i)=>{const[x,y]=pt(i,R*vals[i]);return `<circle cx="${x}" cy="${y}" r="2.5" fill="var(--cyan)"/>`}).join("")}
+        ${grid}<polygon points="${poly}" class="radar-poly" stroke-width="1.5"/>
+        ${axes.map((_,i)=>{const[x,y]=pt(i,R*vals[i]);return `<circle cx="${x}" cy="${y}" r="2.5" class="radar-dot"/>`}).join("")}
         ${labels}</svg>`;
       return el("div",{class:"radar-wrap"}, rawSvg(svg),
         el("div",{}, el("div",{class:"note"},"подтверждается артефактами,"),

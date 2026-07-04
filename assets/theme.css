@@ -1,42 +1,53 @@
-/* ПИШ ЦИ БАС — платформа: дизайн-система «инженерная телеметрия» */
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Semi+Condensed:wght@500;600;700&display=swap');
+
+/* ПИШ ЦИ — фирменный стиль «ЦИФРОВОЙ ИНЖИНИРИНГ, ПИШ СПбПУ»
+   Бренд: индиго #4547BB (Pantone 2726 C) + зелёный #3FCC71 (Pantone 7479 C) + чёрный.
+   Шрифт: PFDinTextCompPro → веб-замена Barlow / Barlow Semi Condensed (DIN-семейство). */
 
 :root {
-  /* палитра — светлая (по умолчанию): инженерная «бумага» / Swiss */
-  --bg:        oklch(97% 0.005 240);
-  --bg-2:      oklch(94.5% 0.008 240);
-  --surface:   oklch(99.3% 0.003 240);
-  --surface-2: oklch(95% 0.01 240);
-  --line:      oklch(88% 0.012 240);
-  --line-2:    oklch(80% 0.02 240);
+  /* фирменные цвета */
+  --brand:     oklch(46% 0.19 277);   /* #4547BB индиго */
+  --brand-2:   oklch(74% 0.17 152);   /* #3FCC71 зелёный */
 
-  --text:      oklch(26% 0.02 255);
-  --text-mut:  oklch(46% 0.02 255);
-  --text-dim:  oklch(60% 0.018 255);
+  /* палитра — светлая (по умолчанию) */
+  --bg:        oklch(97.5% 0.004 277);
+  --bg-2:      oklch(95% 0.007 277);
+  --surface:   oklch(99.5% 0.002 277);
+  --surface-2: oklch(96% 0.008 277);
+  --line:      oklch(89% 0.012 277);
+  --line-2:    oklch(80% 0.018 277);
 
-  --cyan:      oklch(55% 0.15 235);
-  --cyan-dim:  oklch(48% 0.12 235);
-  --amber:     oklch(60% 0.15 60);
-  --lime:      oklch(56% 0.15 145);
-  --rose:      oklch(56% 0.19 22);
-  --violet:    oklch(52% 0.18 295);
+  --text:      oklch(24% 0.03 277);
+  --text-mut:  oklch(45% 0.03 277);
+  --text-dim:  oklch(60% 0.02 277);
 
-  --grid:      oklch(50% 0.05 250 / 0.05);
-  --nav-bg:    oklch(97% 0.005 240 / 0.82);
-  --on-accent: oklch(99% 0.004 240);
-  --scrim:     oklch(30% 0.02 250 / 0.5);
+  /* акценты (легаси-имена → бренд): cyan=индиго, lime=зелёный */
+  --cyan:      var(--brand);
+  --cyan-dim:  oklch(40% 0.17 277);
+  --lime:      oklch(56% 0.15 152);
+  --violet:    oklch(52% 0.18 300);
+  --amber:     oklch(64% 0.15 62);
+  --rose:      oklch(55% 0.20 25);
 
-  /* семантика стадий/статусов */
-  --s1: var(--cyan);
-  --s2: var(--violet);
-  --s3: var(--amber);
-  --s4: var(--lime);
+  /* стадии проекта С1–С4 */
+  --s1: var(--brand);
+  --s2: oklch(52% 0.18 300);
+  --s3: oklch(56% 0.15 152);
+  --s4: oklch(52% 0.11 195);
 
+  --grid:      oklch(46% 0.19 277 / 0.05);
+  --nav-bg:    oklch(97.5% 0.004 277 / 0.85);
+  --on-accent: oklch(99% 0.004 277);
+  --scrim:     oklch(25% 0.06 277 / 0.55);
+
+  /* статусы */
   --ok:   var(--lime);
   --warn: var(--amber);
   --risk: var(--rose);
 
-  /* типографика */
-  --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
+  /* типографика — бренд */
+  --sans: "Barlow", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
+  --cond: "Barlow Semi Condensed", "Barlow", system-ui, sans-serif;
   --mono: "JetBrains Mono", ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
 
   --t-hero: clamp(2.6rem, 1.2rem + 5.6vw, 6rem);
@@ -55,30 +66,35 @@
   --dur: 320ms;
 }
 
-/* тёмная приборная тема — оверрайд */
+/* тёмная тема — оверрайд (глубокий индиго) */
 :root[data-theme="dark"] {
-  --bg:        oklch(15% 0.02 250);
-  --bg-2:      oklch(18% 0.025 250);
-  --surface:   oklch(21% 0.028 250);
-  --surface-2: oklch(25% 0.03 250);
-  --line:      oklch(32% 0.03 250);
-  --line-2:    oklch(42% 0.035 250);
+  --bg:        oklch(17% 0.03 277);
+  --bg-2:      oklch(20% 0.035 277);
+  --surface:   oklch(23% 0.04 277);
+  --surface-2: oklch(27% 0.042 277);
+  --line:      oklch(34% 0.04 277);
+  --line-2:    oklch(45% 0.045 277);
 
-  --text:      oklch(96% 0.008 250);
-  --text-mut:  oklch(72% 0.02 250);
-  --text-dim:  oklch(56% 0.02 250);
+  --text:      oklch(96% 0.01 277);
+  --text-mut:  oklch(74% 0.02 277);
+  --text-dim:  oklch(58% 0.02 277);
 
-  --cyan:      oklch(80% 0.13 205);
-  --cyan-dim:  oklch(62% 0.10 205);
+  --cyan:      oklch(72% 0.14 282);   /* светлый индиго-периwinkle */
+  --cyan-dim:  oklch(62% 0.12 282);
+  --lime:      oklch(80% 0.18 150);   /* яркий зелёный */
+  --violet:    oklch(70% 0.15 300);
   --amber:     oklch(82% 0.14 78);
-  --lime:      oklch(84% 0.17 135);
-  --rose:      oklch(72% 0.16 18);
-  --violet:    oklch(74% 0.13 300);
+  --rose:      oklch(72% 0.16 22);
 
-  --grid:      oklch(50% 0.02 250 / 0.04);
-  --nav-bg:    oklch(15% 0.02 250 / 0.78);
-  --on-accent: oklch(18% 0.03 250);
-  --scrim:     oklch(10% 0.02 250 / 0.7);
+  --s1: oklch(72% 0.14 282);
+  --s2: oklch(70% 0.15 300);
+  --s3: oklch(80% 0.18 150);
+  --s4: oklch(74% 0.11 195);
+
+  --grid:      oklch(65% 0.06 277 / 0.05);
+  --nav-bg:    oklch(17% 0.03 277 / 0.8);
+  --on-accent: oklch(18% 0.03 277);
+  --scrim:     oklch(9% 0.02 277 / 0.72);
 }
 
 * { box-sizing: border-box; }
@@ -108,16 +124,17 @@ body {
   * { animation: none !important; transition: none !important; scroll-behavior: auto; }
 }
 
-h1, h2, h3 { line-height: 1.12; font-weight: 640; letter-spacing: -0.02em; margin: 0; }
+h1, h2, h3 { font-family: var(--cond); line-height: 1.08; font-weight: 700; letter-spacing: -0.005em; margin: 0; }
 p { margin: 0 0 1rem; }
 a { color: var(--cyan); text-decoration: none; }
 a:hover { text-decoration: underline; }
 
 .mono { font-family: var(--mono); }
 .kicker {
-  font-family: var(--mono);
-  font-size: var(--t-xs);
-  letter-spacing: 0.22em;
+  font-family: var(--cond);
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--cyan-dim);
 }
@@ -133,14 +150,19 @@ a:hover { text-decoration: underline; }
   backdrop-filter: blur(14px);
   background: var(--nav-bg);
   border-bottom: 1px solid var(--line);
+  border-top: 3px solid transparent;
+  border-image: linear-gradient(90deg, var(--brand) 0 55%, var(--brand-2) 55% 100%) 1;
 }
 .nav-in {
   display: flex; align-items: center; gap: 1.5rem;
   height: 62px;
   width: min(1180px, 92vw); margin-inline: auto;
 }
-.brand { display: flex; align-items: center; gap: 0.7rem; font-weight: 680; letter-spacing: -0.02em; }
-.brand .glyph { width: 26px; height: 26px; color: var(--cyan); }
+.brand { display: flex; align-items: center; }
+.brand img { height: 34px; width: auto; display: block; }
+.logo-dark { display: none; }
+:root[data-theme="dark"] .logo-light { display: none; }
+:root[data-theme="dark"] .logo-dark { display: block; }
 .nav-links { display: flex; gap: 1.4rem; margin-left: auto; font-size: var(--t-sm); }
 .nav-links a { color: var(--text-mut); }
 .nav-links a:hover, .nav-links a.active { color: var(--text); text-decoration: none; }

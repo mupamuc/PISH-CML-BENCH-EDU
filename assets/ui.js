@@ -18,10 +18,16 @@
     return n;
   };
 
-  // логотип-глиф (БПЛА-стилизация)
-  window.GLYPH = `<svg class="glyph" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-    <path d="M16 6v20M6 12h20M9 12l-3-4M23 12l3-4M9 12l-3 4M23 12l3 4"/>
-    <circle cx="16" cy="16" r="2.4" fill="currentColor" stroke="none"/></svg>`;
+  // фирменный логотип ПИШ ЦИ (цветной для светлой темы, белый для тёмной)
+  window.logoEl = function (h) {
+    const wrap = el("span", { class: "brand-logo", style: "display:inline-flex;align-items:center" });
+    const light = el("img", { class: "logo-light", src: "assets/img/logo_color.png",
+      alt: "Цифровой инжиниринг · ПИШ СПбПУ" });
+    const dark = el("img", { class: "logo-dark", src: "assets/img/logo_white.png", alt: "" });
+    if (h) { light.style.height = h + "px"; dark.style.height = h + "px"; }
+    wrap.append(light, dark);
+    return wrap;
+  };
 
   // навигация (общая для всех страниц)
   window.mountNav = function (active) {
@@ -32,8 +38,7 @@
     ];
     const nav = el("nav", { class: "nav" },
       el("div", { class: "nav-in" },
-        el("a", { class: "brand", href: "index.html", style: "color:inherit" },
-          rawSvg(GLYPH), el("span", {}, "ПИШ ЦИ · БАС")),
+        el("a", { class: "brand", href: "index.html", style: "color:inherit" }, logoEl(34)),
         el("div", { class: "nav-links" },
           ...links.map(([h, t]) =>
             el("a", { href: h, class: active === h ? "active" : "" }, t))),
@@ -76,7 +81,7 @@
         el("div", { class: "wrap" },
           el("div", { class: "flex between wrap-w gap-m" },
             el("div", {},
-              el("div", { class: "flex center gap-s", style:"margin-bottom:.6rem" }, rawSvg(GLYPH), el("b", {}, "Платформа ПИШ ЦИ БАС")),
+              el("div", { style:"margin-bottom:.8rem" }, logoEl(40)),
               el("div", { class: "dim", style:"max-width:44ch" },
                 "Демонстрационный прототип фазы 0. Данные учебного плана — реальные (g15.04.03_ПИШ_2026); команды и прогресс — синтетические для показа.")),
             el("div", { class:"mono", style:"font-size:var(--t-xs);text-align:right;color:var(--text-dim)" },
