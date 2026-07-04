@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Кабинеты платформы · ПИШ ЦИ БАС</title>
   <meta name="description" content="Кликабельный прототип кабинетов: студент, преподаватель, РОП, директор.">
+  <script>(function(){var t;try{t=localStorage.getItem("theme")}catch(e){}document.documentElement.setAttribute("data-theme",t==="dark"?"dark":"light")})();</script>
   <link rel="stylesheet" href="assets/theme.css">
   <style>
     .roleswitch{ position:sticky; top:62px; z-index:40; background:var(--bg-2); border-bottom:1px solid var(--line); }
@@ -13,7 +14,7 @@
       border:1px solid var(--line-2); background:transparent; color:var(--text-mut); cursor:pointer; white-space:nowrap;
       transition:all var(--dur) var(--ease); display:flex; gap:.5rem; align-items:center; }
     .rtab:hover{ color:var(--text); border-color:var(--cyan-dim); }
-    .rtab.on{ background:var(--cyan); color:oklch(18% .03 250); border-color:var(--cyan); font-weight:600; }
+    .rtab.on{ background:var(--cyan); color:var(--on-accent); border-color:var(--cyan); font-weight:600; }
 
     .view{ padding-block:2rem 4rem; }
     .vhead{ margin-bottom:1.6rem; }
@@ -59,14 +60,14 @@
     .vv{ display:flex; flex-direction:column; gap:.5rem; }
     .vvrow{ display:flex; gap:.6rem; align-items:center; padding:.5rem .7rem; border:1px solid var(--line); border-radius:var(--radius); }
     .vvrow .box{ width:18px;height:18px;border-radius:3px;border:1.5px solid var(--line-2); flex:none; display:grid; place-items:center; cursor:pointer; font-size:.8rem; }
-    .vvrow.done .box{ background:var(--ok); border-color:var(--ok); color:oklch(18% .03 250); }
+    .vvrow.done .box{ background:var(--ok); border-color:var(--ok); color:var(--on-accent); }
     .vvrow.done span{ color:var(--text-mut); }
 
     .note{ font-size:var(--t-xs); color:var(--text-dim); font-family:var(--mono); }
     .toggle{ width:38px;height:22px;border-radius:100px;background:var(--surface-2);border:1px solid var(--line-2);position:relative;cursor:pointer; flex:none; }
     .toggle::after{ content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--text-dim);transition:all var(--dur) var(--ease); }
     .toggle.on{ background:var(--cyan); border-color:var(--cyan); }
-    .toggle.on::after{ left:18px; background:oklch(18% .03 250); }
+    .toggle.on::after{ left:18px; background:var(--on-accent); }
     .demo-banner{ font-family:var(--mono);font-size:var(--t-xs);color:var(--amber);border:1px dashed var(--amber);
       border-radius:var(--radius);padding:.5rem .8rem;display:inline-block; }
   </style>

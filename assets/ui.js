@@ -37,11 +37,33 @@
         el("div", { class: "nav-links" },
           ...links.map(([h, t]) =>
             el("a", { href: h, class: active === h ? "active" : "" }, t))),
-        el("a", { class: "nav-cta", href: "#postupit", onclick: gotoPostupit }, "Поступить →")
+        el("a", { class: "nav-cta", href: "#postupit", onclick: gotoPostupit }, "Поступить →"),
+        themeBtn()
       )
     );
     document.body.prepend(nav);
   };
+
+  // иконки темы
+  const SUN = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg>`;
+  const MOON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4 7 7 0 1 0 20 14.5z"/></svg>`;
+
+  function themeBtn() {
+    const b = el("button", { class: "theme-btn", "aria-label": "Переключить тему", title: "Светлая / тёмная тема" });
+    const paint = () => {
+      const dark = document.documentElement.getAttribute("data-theme") === "dark";
+      b.innerHTML = dark ? SUN : MOON;   // показываем иконку того, во что переключим
+    };
+    b.addEventListener("click", () => {
+      const dark = document.documentElement.getAttribute("data-theme") === "dark";
+      const next = dark ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try { localStorage.setItem("theme", next); } catch (e) {}
+      paint();
+    });
+    paint();
+    return b;
+  }
   function gotoPostupit(e){
     if (!document.getElementById("postupit")) { e.preventDefault(); location.href = "index.html#postupit"; }
   }

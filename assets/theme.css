@@ -1,24 +1,29 @@
 /* ПИШ ЦИ БАС — платформа: дизайн-система «инженерная телеметрия» */
 
 :root {
-  /* палитра — тёмная приборная */
-  --bg:        oklch(15% 0.02 250);
-  --bg-2:      oklch(18% 0.025 250);
-  --surface:   oklch(21% 0.028 250);
-  --surface-2: oklch(25% 0.03 250);
-  --line:      oklch(32% 0.03 250);
-  --line-2:    oklch(42% 0.035 250);
+  /* палитра — светлая (по умолчанию): инженерная «бумага» / Swiss */
+  --bg:        oklch(97% 0.005 240);
+  --bg-2:      oklch(94.5% 0.008 240);
+  --surface:   oklch(99.3% 0.003 240);
+  --surface-2: oklch(95% 0.01 240);
+  --line:      oklch(88% 0.012 240);
+  --line-2:    oklch(80% 0.02 240);
 
-  --text:      oklch(96% 0.008 250);
-  --text-mut:  oklch(72% 0.02 250);
-  --text-dim:  oklch(56% 0.02 250);
+  --text:      oklch(26% 0.02 255);
+  --text-mut:  oklch(46% 0.02 255);
+  --text-dim:  oklch(60% 0.018 255);
 
-  --cyan:      oklch(80% 0.13 205);
-  --cyan-dim:  oklch(62% 0.10 205);
-  --amber:     oklch(82% 0.14 78);
-  --lime:      oklch(84% 0.17 135);
-  --rose:      oklch(72% 0.16 18);
-  --violet:    oklch(74% 0.13 300);
+  --cyan:      oklch(55% 0.15 235);
+  --cyan-dim:  oklch(48% 0.12 235);
+  --amber:     oklch(60% 0.15 60);
+  --lime:      oklch(56% 0.15 145);
+  --rose:      oklch(56% 0.19 22);
+  --violet:    oklch(52% 0.18 295);
+
+  --grid:      oklch(50% 0.05 250 / 0.05);
+  --nav-bg:    oklch(97% 0.005 240 / 0.82);
+  --on-accent: oklch(99% 0.004 240);
+  --scrim:     oklch(30% 0.02 250 / 0.5);
 
   /* семантика стадий/статусов */
   --s1: var(--cyan);
@@ -50,7 +55,36 @@
   --dur: 320ms;
 }
 
+/* тёмная приборная тема — оверрайд */
+:root[data-theme="dark"] {
+  --bg:        oklch(15% 0.02 250);
+  --bg-2:      oklch(18% 0.025 250);
+  --surface:   oklch(21% 0.028 250);
+  --surface-2: oklch(25% 0.03 250);
+  --line:      oklch(32% 0.03 250);
+  --line-2:    oklch(42% 0.035 250);
+
+  --text:      oklch(96% 0.008 250);
+  --text-mut:  oklch(72% 0.02 250);
+  --text-dim:  oklch(56% 0.02 250);
+
+  --cyan:      oklch(80% 0.13 205);
+  --cyan-dim:  oklch(62% 0.10 205);
+  --amber:     oklch(82% 0.14 78);
+  --lime:      oklch(84% 0.17 135);
+  --rose:      oklch(72% 0.16 18);
+  --violet:    oklch(74% 0.13 300);
+
+  --grid:      oklch(50% 0.02 250 / 0.04);
+  --nav-bg:    oklch(15% 0.02 250 / 0.78);
+  --on-accent: oklch(18% 0.03 250);
+  --scrim:     oklch(10% 0.02 250 / 0.7);
+}
+
 * { box-sizing: border-box; }
+
+html { color-scheme: light; }
+html[data-theme="dark"] { color-scheme: dark; }
 
 html { scroll-behavior: smooth; }
 
@@ -64,9 +98,10 @@ body {
   -webkit-font-smoothing: antialiased;
   /* сетка-чертёж */
   background-image:
-    linear-gradient(oklch(50% 0.02 250 / 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, oklch(50% 0.02 250 / 0.04) 1px, transparent 1px);
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
   background-size: 42px 42px;
+  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -96,7 +131,7 @@ a:hover { text-decoration: underline; }
 .nav {
   position: sticky; top: 0; z-index: 50;
   backdrop-filter: blur(14px);
-  background: oklch(15% 0.02 250 / 0.78);
+  background: var(--nav-bg);
   border-bottom: 1px solid var(--line);
 }
 .nav-in {
@@ -146,7 +181,7 @@ a:hover { text-decoration: underline; }
   padding: 0.7rem 1.2rem; border-radius: var(--radius);
   border: 1px solid transparent; cursor: pointer; transition: all var(--dur) var(--ease);
 }
-.btn-primary { background: var(--cyan); color: oklch(18% 0.03 250); font-weight: 600; }
+.btn-primary { background: var(--cyan); color: var(--on-accent); font-weight: 600; }
 .btn-primary:hover { filter: brightness(1.08); text-decoration: none; }
 .btn-ghost { border-color: var(--line-2); color: var(--text); background: transparent; }
 .btn-ghost:hover { border-color: var(--cyan-dim); color: var(--cyan); text-decoration: none; }
@@ -174,3 +209,14 @@ footer.site {
 @media (max-width: 780px) {
   .nav-links { display: none; }
 }
+
+/* переключатель темы */
+.theme-btn {
+  display: inline-grid; place-items: center;
+  width: 36px; height: 36px; margin-left: 0.6rem;
+  border: 1px solid var(--line-2); border-radius: var(--radius);
+  background: transparent; color: var(--text-mut); cursor: pointer;
+  transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.theme-btn:hover { color: var(--cyan); border-color: var(--cyan-dim); }
+.theme-btn svg { width: 18px; height: 18px; }

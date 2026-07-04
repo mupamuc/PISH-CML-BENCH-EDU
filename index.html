@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Платформа магистратуры ПИШ ЦИ · Цифровой инжиниринг БАС</title>
   <meta name="description" content="Цифровая среда магистратуры «Системный цифровой инжиниринг БАС» ПИШ СПбПУ: сквозной проект, ИИ-помощь, компетенции, гранты, портфолио.">
+  <script>(function(){var t;try{t=localStorage.getItem("theme")}catch(e){}document.documentElement.setAttribute("data-theme",t==="dark"?"dark":"light")})();</script>
   <link rel="stylesheet" href="assets/theme.css">
   <style>
     .hero { position: relative; padding-block: clamp(3rem,2rem+6vw,7rem) var(--sp); overflow: clip; }
@@ -32,7 +33,7 @@
     .fbtn { font-family:var(--mono); font-size:var(--t-xs); padding:.4rem .8rem; border:1px solid var(--line-2);
       border-radius:100px; background:transparent; color:var(--text-mut); cursor:pointer; transition:all var(--dur) var(--ease); }
     .fbtn:hover{ color:var(--text); border-color:var(--cyan-dim); }
-    .fbtn.on{ background:var(--cyan); color:oklch(18% .03 250); border-color:var(--cyan); font-weight:600; }
+    .fbtn.on{ background:var(--cyan); color:var(--on-accent); border-color:var(--cyan); font-weight:600; }
 
     .disc-grid{ grid-template-columns:repeat(auto-fill,minmax(255px,1fr)); }
     .disc{ padding:1rem; display:flex; flex-direction:column; gap:.5rem; transition:transform var(--dur) var(--ease),border-color var(--dur) var(--ease); }
