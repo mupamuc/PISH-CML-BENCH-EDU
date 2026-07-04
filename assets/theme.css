@@ -159,10 +159,11 @@ a:hover { text-decoration: underline; }
   width: min(1180px, 92vw); margin-inline: auto;
 }
 .brand { display: flex; align-items: center; }
-.brand img { height: 34px; width: auto; display: block; }
-.logo-dark { display: none; }
-:root[data-theme="dark"] .logo-light { display: none; }
-:root[data-theme="dark"] .logo-dark { display: block; }
+.brand-logo img { width: auto; }
+img.logo-light { display: block; }
+img.logo-dark  { display: none; }
+:root[data-theme="dark"] img.logo-light { display: none; }
+:root[data-theme="dark"] img.logo-dark  { display: block; }
 .nav-links { display: flex; gap: 1.4rem; margin-left: auto; font-size: var(--t-sm); }
 .nav-links a { color: var(--text-mut); }
 .nav-links a:hover, .nav-links a.active { color: var(--text); text-decoration: none; }

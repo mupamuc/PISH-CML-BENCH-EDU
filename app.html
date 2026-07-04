@@ -77,6 +77,72 @@
     .toggle.on::after{ left:18px; background:var(--on-accent); }
     .demo-banner{ font-family:var(--mono);font-size:var(--t-xs);color:var(--amber);border:1px dashed var(--amber);
       border-radius:var(--radius);padding:.5rem .8rem;display:inline-block; }
+
+    /* дисциплины студента */
+    .disc-cards{ display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:1rem; }
+    .dcard{ padding:1.1rem; cursor:pointer; transition:transform var(--dur) var(--ease),border-color var(--dur) var(--ease); }
+    .dcard:hover{ transform:translateY(-3px); border-color:var(--cyan-dim); }
+    .dcard .dc-code{ font-family:var(--mono); font-size:var(--t-xs); color:var(--cyan-dim); }
+    .dcard .dc-nm{ font-weight:560; line-height:1.25; margin-top:.35rem; min-height:2.6em; }
+    .dcard .dc-foot{ display:flex; gap:.4rem; flex-wrap:wrap; margin-top:.8rem; }
+    .btn-sm{ padding:.45rem .8rem; font-size:var(--t-xs); }
+
+    /* детальная дисциплина */
+    .stub{ display:flex; gap:1rem; align-items:flex-start; }
+    .stub-ic{ font-size:2rem; color:var(--text-dim); line-height:1; }
+    .syl{ display:flex; flex-direction:column; gap:.3rem; margin-top:.4rem; }
+    .syl-row{ display:grid; grid-template-columns:26px 22px 1fr auto; gap:.7rem; align-items:center;
+      padding:.55rem .6rem; border:1px solid var(--line); border-radius:var(--radius); }
+    .syl-row.filled{ cursor:pointer; border-color:var(--brand-2); background:color-mix(in oklab,var(--brand-2) 6%,transparent); }
+    .syl-row.filled:hover{ background:color-mix(in oklab,var(--brand-2) 12%,transparent); }
+    .syl-row.soon{ opacity:.62; }
+    .syl-n{ font-family:var(--mono); font-size:var(--t-xs); color:var(--text-dim); text-align:center; }
+    .syl-b{ font-family:var(--mono); font-weight:700; font-size:var(--t-xs); text-align:center; color:var(--cyan-dim); }
+    .syl-txt{ font-size:var(--t-sm); line-height:1.3; }
+    .mat-cat{ font-family:var(--cond); text-transform:uppercase; letter-spacing:.1em; font-size:var(--t-xs);
+      color:var(--cyan-dim); margin:1.1rem 0 .5rem; }
+    .mat-row{ display:flex; gap:.8rem; align-items:center; padding:.6rem 0; border-bottom:1px solid var(--line); }
+    .mat-row:last-child{ border-bottom:none; }
+    .mat-info{ flex:1; min-width:0; }
+    .mat-size{ font-size:var(--t-xs); white-space:nowrap; }
+    .ftype{ font-family:var(--mono); font-size:.62rem; font-weight:700; letter-spacing:.05em;
+      color:var(--fc); border:1px solid var(--fc); border-radius:3px; padding:.2rem .35rem; flex:none; width:52px; text-align:center; }
+
+    /* overlay + читалка + тест */
+    .disc-ov{ position:fixed; inset:0; background:var(--scrim); backdrop-filter:blur(4px); z-index:120;
+      display:flex; align-items:flex-start; justify-content:center; padding:2.5rem 1rem; overflow:auto; }
+    .reader{ width:min(760px,96vw); padding:1.8rem clamp(1.2rem,3vw,2.6rem); position:relative; }
+    .rd-x{ position:absolute; top:1rem; right:1rem; background:none; border:none; color:var(--text-mut); font-size:1.4rem; cursor:pointer; z-index:2; }
+    .rd-head{ border-bottom:2px solid var(--line-2); padding-bottom:1.2rem; margin-bottom:1.4rem; }
+    .rd-title{ font-size:clamp(1.6rem,1rem+2vw,2.3rem); margin-top:.4rem; }
+    .reader-body{ font-size:1.02rem; line-height:1.7; }
+    .rd-h2{ font-size:1.45rem; margin:1.8rem 0 .7rem; color:var(--brand); }
+    :root[data-theme="dark"] .rd-h2{ color:var(--cyan); }
+    .rd-h3{ font-size:1.15rem; margin:1.2rem 0 .5rem; }
+    .rd-p{ margin:.5rem 0 .9rem; }
+    .rd-formula{ font-family:"Cambria Math","Times New Roman",serif; font-size:1.15rem; text-align:center;
+      padding:.9rem 1rem; margin:1rem 0; background:var(--surface-2); border-left:3px solid var(--brand); border-radius:var(--radius); overflow-x:auto; }
+    .rd-note{ font-size:var(--t-sm); color:var(--text-mut); background:var(--bg-2); border-left:3px solid var(--cyan-dim);
+      padding:.7rem .9rem; margin:1rem 0; border-radius:var(--radius); }
+    .rd-ex{ font-size:var(--t-sm); background:color-mix(in oklab,var(--brand-2) 9%,transparent);
+      border-left:3px solid var(--brand-2); padding:.7rem .9rem; margin:1rem 0; border-radius:var(--radius); }
+    .rd-list{ margin:.6rem 0 1rem 1.2rem; } .rd-list li{ margin:.35rem 0; }
+    .rd-tablewrap{ overflow-x:auto; margin:1.1rem 0; }
+    .rd-table{ width:100%; border-collapse:collapse; font-size:var(--t-sm); }
+    .rd-table th,.rd-table td{ border:1px solid var(--line); padding:.5rem .6rem; text-align:left; vertical-align:top; }
+    .rd-table th{ background:var(--surface-2); font-family:var(--cond); }
+
+    .quiz-score{ font-family:var(--mono); font-size:var(--t-sm); color:var(--cyan); margin-top:.9rem; }
+    .quiz-q{ padding:1rem 0; border-bottom:1px solid var(--line); }
+    .quiz-qh{ display:flex; gap:.6rem; font-weight:560; }
+    .quiz-num{ font-family:var(--mono); color:var(--cyan-dim); flex:none; }
+    .quiz-opts{ display:flex; flex-direction:column; gap:.4rem; margin:.8rem 0 0 1.6rem; }
+    .quiz-opt{ text-align:left; padding:.55rem .8rem; border:1px solid var(--line-2); border-radius:var(--radius);
+      background:transparent; color:var(--text); cursor:pointer; font-size:var(--t-sm); transition:all var(--dur) var(--ease); }
+    .quiz-opt:hover:not(:disabled){ border-color:var(--cyan-dim); }
+    .quiz-opt.ok{ border-color:var(--ok); background:color-mix(in oklab,var(--ok) 14%,transparent); }
+    .quiz-opt.bad{ border-color:var(--risk); background:color-mix(in oklab,var(--risk) 12%,transparent); }
+    .quiz-expl{ margin:.7rem 0 0 1.6rem; font-size:var(--t-sm); color:var(--text-mut); }
   </style>
 </head>
 <body>
@@ -89,6 +155,9 @@
 
   <script src="assets/data.js"></script>
   <script src="assets/ui.js"></script>
+  <script src="assets/course-vm.js"></script>
+  <script src="assets/lecture-cfd.js"></script>
+  <script src="assets/discipline.js"></script>
   <script>
     const D = window.DATA;
     mountNav("app.html");
@@ -100,7 +169,7 @@
     let cur="student";
     const rbox=document.getElementById("roles");
     ROLES.forEach(([k,l])=>rbox.append(el("button",{class:"rtab"+(k===cur?" on":""),"data-r":k,
-      onclick:()=>{cur=k;syncR();render();}},l)));
+      onclick:()=>{cur=k;studentDisc=null;syncR();render();}},l)));
     function syncR(){ rbox.querySelectorAll(".rtab").forEach(b=>b.classList.toggle("on",b.dataset.r===cur)); }
 
     const V=document.getElementById("view");
@@ -109,7 +178,37 @@
     function card(title,extra,...kids){ return el("div",{class:"panel card hud"},
       el("h3",{},el("span",{},title),extra||null),...kids); }
 
-    function render(){ V.innerHTML=""; ({student:vStudent,teacher:vTeacher,rop:vRop,dir:vDir}[cur])(); }
+    let studentDisc = null;
+    window.openDiscipline = function(code){ studentDisc = code; render(); window.scrollTo(0,0); };
+    function backToStudent(){ studentDisc = null; render(); window.scrollTo(0,0); }
+
+    function render(){
+      V.innerHTML="";
+      if(cur==="student" && studentDisc){ V.append(buildDisciplineDetail(studentDisc, backToStudent)); return; }
+      ({student:vStudent,teacher:vTeacher,rop:vRop,dir:vDir}[cur])();
+    }
+    // сброс детали при смене роли
+    ROLES.forEach(([k])=>{}); // (переключение роли уже вызывает render через rtab)
+
+    // секция «Мои дисциплины» (семестр 1)
+    function studentDiscSection(){
+      const list = D.D.filter(d=>d.sem===1 && !d.code.startsWith("ФТД")).slice(0,8);
+      const grid = el("div",{class:"disc-cards"});
+      list.forEach(d=>{
+        const hasMat = d.code===COURSE_VM.code;
+        grid.append(el("div",{class:"panel dcard",onclick:()=>openDiscipline(d.code)},
+          el("div",{class:"dc-code"},d.code),
+          el("div",{class:"dc-nm"},d.name),
+          el("div",{class:"dc-foot"},
+            el("span",{class:"chip"},d.ze+" з.е."),
+            d.core?el("span",{class:"chip",style:"color:var(--amber)"},"расч. ядро"):null,
+            hasMat?el("span",{class:"chip",style:"color:var(--brand-2)"},el("i",{class:"dot"}),"материалы"):null)));
+      });
+      return el("div",{class:"panel card hud",style:"margin-bottom:1rem"},
+        el("h3",{}, el("span",{},"Мои дисциплины · семестр 1"),
+          el("span",{class:"chip",style:"color:var(--cyan-dim)"},"клик — материалы и лекции")),
+        grid);
+    }
 
     /* ——— СТУДЕНТ ——— */
     function vStudent(){
@@ -118,6 +217,8 @@
       V.append(el("div",{class:"kpi",style:"margin-bottom:1rem"},
         kpi("3","занятия сегодня"), kpi("2","дедлайна Moodle"),
         kpi("34%","прогресс проекта"), kpi("58%","компетенции С1")));
+      // Мои дисциплины (семестр 1)
+      V.append(studentDiscSection());
       // 2 колонки
       V.append(el("div",{class:"cols c2"},
         el("div",{class:"cols",style:"gap:1rem"},
@@ -214,7 +315,37 @@
             barLine("Постановка граничных условий",30,"var(--lime)"),
             el("p",{class:"note mt-s"},"18 студентов · агрегировано, обезличенно. Тема «сходимость» — кандидат на доп. разбор."))
       )));
+      // управление материалами
+      V.append(teacherMaterials());
     }
+    function teacherMaterials(){
+      const c=COURSE_VM;
+      const box=el("div",{class:"panel card hud",style:"margin-top:1rem"},
+        el("h3",{}, el("span",{},"Материалы дисциплины · тема 8 «CFD»"),
+          el("span",{class:"flex gap-s",style:"align-items:center"},
+            el("span",{class:"chip",style:"color:var(--brand-2)"},c.materials.length+" опубликовано"),
+            el("button",{class:"btn btn-primary btn-sm",onclick:()=>alert("Загрузка материала (демо): выбор файла → тип → тема → публикация. Файл попадёт в базу знаний и в RAG ИИ-тьютора.")},"+ Загрузить"))),
+        el("p",{class:"note",style:"margin-bottom:1rem"},
+          "Надстройка над Moodle: лекция и тест доступны студенту прямо в платформе; файлы дублируются в базу знаний и питают ИИ-тьютора."));
+      c.materials.forEach(m=>{
+        const act = m.act==="read"
+          ? el("button",{class:"btn btn-ghost btn-sm",onclick:openLectureReader},"Читалка")
+          : m.act==="quiz"
+          ? el("button",{class:"btn btn-ghost btn-sm",onclick:openQuiz},"Тест")
+          : el("a",{class:"btn btn-ghost btn-sm",href:m.file,download:""},"Файл");
+        const vis=el("span",{class:"toggle on",title:"виден студентам",
+          onclick:function(){this.classList.toggle("on");}});
+        box.append(el("div",{class:"mat-row"},
+          el("span",{class:"ftype",style:"--fc:"+ftColor(m.type)},ftLabel(m.type)),
+          el("div",{class:"mat-info"},
+            el("div",{style:"font-weight:560"},m.title),
+            el("div",{class:"dim",style:"font-size:var(--t-xs)"},m.cat+(m.note?" · "+m.note:""))),
+          vis, act));
+      });
+      return box;
+    }
+    function ftColor(t){ return {docx:"var(--brand)",pptx:"var(--amber)",lecture:"var(--brand-2)",quiz:"var(--violet)"}[t]||"var(--text-dim)"; }
+    function ftLabel(t){ return {docx:"DOCX",pptx:"PPTX",lecture:"ЛЕКЦИЯ",quiz:"ТЕСТ"}[t]||"FILE"; }
     function vvList(){
       const items=["Сеточная сходимость показана (мин. 3 сетки)","Оценка погрешности приведена",
         "Проверка на эталонной задаче","Постановка соответствует физике","Данные модели оформлены как актив"];
