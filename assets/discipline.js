@@ -9,6 +9,19 @@
   function ftype(t){ const [l,c]=FT[t]||["FILE","var(--text-dim)"];
     return E("span",{class:"ftype",style:"--fc:"+c},l); }
 
+  function infoBlock(label, text, color){
+    return E("div",{class:"panel",style:"padding:.8rem 1rem;margin-top:.9rem;border-left:3px solid "+color},
+      E("div",{class:"dim",style:"font-size:var(--t-xs);font-family:var(--cond);text-transform:uppercase;letter-spacing:.08em"},label),
+      E("div",{style:"margin-top:.3rem;font-size:var(--t-sm)"}, text));
+  }
+  function topicRow(t, color){
+    return E("div",{class:"mat-row"},
+      E("span",{class:"syl-n",style:"color:"+color}, t.num),
+      E("div",{class:"mat-info"}, t.title),
+      E("span",{class:"mat-size dim mono"}, (t.hours!=null? t.hours+" ч":"")));
+  }
+  function sumH(list){ return list.reduce((s,t)=>s+(t.hours||0),0); }
+
   const ICON = {
     read:  "Читать в платформе",
     quiz:  "Пройти самоконтроль",
@@ -22,18 +35,61 @@
       "← Все дисциплины"));
 
     if (code !== window.COURSE_VM.code) {
-      // заглушка для прочих дисциплин
+      const DB = window.DB;
+      const dd = DB && DB.disciplines.find(x => x.code === code);
+      const tps = DB ? DB.topics.filter(t => t.discipline_code === code) : [];
       const d = window.DATA.D.find(x => x.code === code) || {};
+
+      // РПД из БД (учебный план + требования к дисциплине)
+      if (dd && dd.has_rpd) {
+        const place = [];
+        if (dd.ze) place.push(dd.ze + " з.е.");
+        if (dd.hours_total) place.push(dd.hours_total + " ч");
+        if (dd.hours_lec != null) place.push(dd.hours_lec + " ч лекций");
+        if (dd.hours_pr != null) place.push(dd.hours_pr + " ч практики");
+        if (dd.semester) place.push("семестр " + dd.semester);
+        wrap.append(E("div",{class:"panel card hud"},
+          E("div",{class:"kicker"}, code + " · модуль " + (dd.module_code||"") + (dd.is_core?" · расч. ядро":"")),
+          E("h1",{style:"font-size:var(--t-h1);margin-top:.4rem"}, dd.name),
+          E("div",{class:"flex gap-s wrap-w mt-s"}, ...place.map(p=>E("span",{class:"chip"},p))),
+          dd.role ? infoBlock("Роль в программе", dd.role, "var(--brand)") : null,
+          dd.artifact ? infoBlock("Вклад в сквозной проект", dd.artifact, "var(--brand-2)") : null,
+          dd.boundaries ? infoBlock("Границы (защита от дублей)", dd.boundaries, "var(--amber)") : null,
+          E("div",{class:"flex gap-m wrap-w mt-m"},
+            E("a",{class:"btn btn-ghost",href:"#"}, "Открыть в Moodle (LTI) →"),
+            E("span",{class:"chip",style:"color:var(--cyan-dim)"}, "источник: РПД + учебный план"))));
+
+        const lec = tps.filter(t=>t.kind==="lecture").sort((a,b)=>a.num-b.num);
+        const pr  = tps.filter(t=>t.kind==="practice").sort((a,b)=>a.num-b.num);
+        const prog = E("div",{class:"panel card hud mt-m"},
+          E("h3",{}, E("span",{},"Программа дисциплины"),
+            E("span",{class:"chip",style:"color:var(--brand-2)"}, tps.length + " тем")));
+        if (lec.length){ prog.append(E("div",{class:"mat-cat"}, "Лекции · " + sumH(lec) + " ч"));
+          lec.forEach(t=> prog.append(topicRow(t,"var(--brand)"))); }
+        if (pr.length){ prog.append(E("div",{class:"mat-cat"}, "Практика · " + sumH(pr) + " ч"));
+          pr.forEach(t=> prog.append(topicRow(t,"var(--brand-2)"))); }
+        wrap.append(prog);
+        wrap.append(E("div",{class:"panel card hud mt-m stub"},
+          E("div",{class:"stub-ic"},"◔"),
+          E("div",{},
+            E("div",{style:"font-weight:600"},"Учебные материалы готовятся"),
+            E("div",{class:"dim",style:"margin-top:.3rem"},
+              "Программа выше — из РПД. Конспекты, практика и тесты появятся по мере наполнения. Полностью наполнена дисциплина «Вычислительная механика» — ",
+              E("a",{href:"#",style:"color:var(--brand)",onclick:(e)=>{e.preventDefault();backFn();setTimeout(()=>window.openDiscipline(window.COURSE_VM.code),50);}},"открыть для примера"),"."))));
+        return wrap;
+      }
+
+      // нет РПД — заглушка
       wrap.append(
         E("div", { class:"panel card hud" },
-          E("div",{class:"kicker"}, code + " · " + d.ze + " з.е. · С" + d.sem),
-          E("h1",{style:"font-size:var(--t-h1);margin-top:.4rem"}, d.name || code),
+          E("div",{class:"kicker"}, code + (dd&&dd.ze?" · "+dd.ze+" з.е.":"") + (d.sem?" · С"+d.sem:"")),
+          E("h1",{style:"font-size:var(--t-h1);margin-top:.4rem"}, (dd&&dd.name) || d.name || code),
           E("div",{class:"stub mt-l"},
             E("div",{class:"stub-ic"},"◔"),
             E("div",{},
-              E("div",{style:"font-weight:600"},"Материалы дисциплины готовятся"),
+              E("div",{style:"font-weight:600"},"Программа дисциплины готовится"),
               E("div",{class:"dim",style:"margin-top:.3rem"},
-                "Программа, лекции, практика и тесты появятся здесь по мере наполнения кафедрой. Для курса «Вычислительная механика» материалы уже загружены — откройте его для примера."),
+                "РПД и материалы появятся здесь по мере наполнения кафедрой. Для курса «Вычислительная механика» всё уже загружено — откройте для примера."),
               E("div",{class:"flex gap-m mt-m"},
                 E("a",{class:"chip",href:"#"},"Moodle-курс (LTI)"),
                 E("a",{class:"chip",style:"color:var(--brand)",href:"#",
