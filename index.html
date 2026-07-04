@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Платформа магистратуры ПИШ ЦИ · Цифровой инжиниринг БАС</title>
+  <meta name="description" content="Цифровая среда магистратуры «Системный цифровой инжиниринг БАС» ПИШ СПбПУ: сквозной проект, ИИ-помощь, компетенции, гранты, портфолио.">
+  <link rel="stylesheet" href="assets/theme.css">
+  <style>
+    .hero { position: relative; padding-block: clamp(3rem,2rem+6vw,7rem) var(--sp); overflow: clip; }
+    .hero h1 { font-size: var(--t-hero); max-width: 16ch; }
+    .hero .lead { font-size: var(--t-h3); color: var(--text-mut); max-width: 52ch; margin-top: 1.4rem; }
+    .hero-tags { display:flex; gap:.6rem; flex-wrap:wrap; margin-top: 2rem; }
+    .hero-cta { display:flex; gap:1rem; flex-wrap:wrap; margin-top: 2.4rem; }
+    .hero-scan { position:absolute; inset:0; z-index:-1; opacity:.5;
+      background: radial-gradient(60% 55% at 78% 20%, oklch(80% 0.13 205 / 0.14), transparent 70%),
+                  radial-gradient(50% 50% at 20% 90%, oklch(74% 0.13 300 / 0.10), transparent 70%); }
+    .drone { position:absolute; right:-4%; top:12%; width:min(46vw,560px); opacity:.16; color:var(--cyan); z-index:-1; }
+    @media(max-width:900px){ .drone{ display:none; } }
+
+    .statgrid { grid-template-columns: repeat(4, 1fr); }
+    .stat { padding: 1.4rem 1.2rem; }
+    .stat .lbl { font-size: var(--t-sm); color: var(--text-mut); margin-top:.4rem; }
+    @media(max-width:720px){ .statgrid{ grid-template-columns: repeat(2,1fr); } }
+
+    .idea { grid-template-columns: 1.1fr 1fr; align-items:center; }
+    @media(max-width:860px){ .idea{ grid-template-columns:1fr; } }
+    .maprow { padding:1rem 1.2rem; border-left:2px solid var(--line-2); }
+    .maprow b { color: var(--cyan); font-family:var(--mono); font-size:var(--t-sm); }
+
+    .filters { display:flex; gap:.5rem; flex-wrap:wrap; margin-bottom:1.4rem; }
+    .fbtn { font-family:var(--mono); font-size:var(--t-xs); padding:.4rem .8rem; border:1px solid var(--line-2);
+      border-radius:100px; background:transparent; color:var(--text-mut); cursor:pointer; transition:all var(--dur) var(--ease); }
+    .fbtn:hover{ color:var(--text); border-color:var(--cyan-dim); }
+    .fbtn.on{ background:var(--cyan); color:oklch(18% .03 250); border-color:var(--cyan); font-weight:600; }
+
+    .disc-grid{ grid-template-columns:repeat(auto-fill,minmax(255px,1fr)); }
+    .disc{ padding:1rem; display:flex; flex-direction:column; gap:.5rem; transition:transform var(--dur) var(--ease),border-color var(--dur) var(--ease); }
+    .disc:hover{ transform:translateY(-3px); border-color:var(--cyan-dim); }
+    .disc .code{ font-family:var(--mono); font-size:var(--t-xs); color:var(--cyan-dim); }
+    .disc .nm{ font-weight:560; line-height:1.25; }
+    .disc .meta{ margin-top:auto; display:flex; gap:.5rem; flex-wrap:wrap; }
+
+    .stages{ grid-template-columns:repeat(4,1fr); }
+    @media(max-width:900px){ .stages{ grid-template-columns:1fr; } }
+    .stage{ padding:1.3rem; border-top:3px solid; }
+    .stage .tg{ font-family:var(--mono); font-weight:700; font-size:1.4rem; }
+    .stage .rz{ font-size:var(--t-sm); color:var(--text-mut); margin-top:.6rem; }
+
+    .agents-grid{ grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); }
+    .agent{ padding:1.2rem; }
+    .agent h3{ font-size:var(--t-h3); }
+    .agent .d{ font-size:var(--t-sm); color:var(--text-mut); margin-top:.5rem; }
+
+    .edge-grid{ grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); }
+    .edge{ padding:1.2rem; border-left:2px solid var(--lime); }
+
+    .roles-row{ display:flex; gap:.8rem; flex-wrap:wrap; }
+    .role{ padding:.9rem 1.1rem; display:flex; gap:.7rem; align-items:center; }
+    .role .ic{ font-family:var(--mono); font-size:1.3rem; color:var(--cyan); }
+
+    .cta{ text-align:center; padding:var(--sp) 1rem; border-radius:var(--radius-lg);
+      background:linear-gradient(160deg, var(--surface), var(--bg-2));
+      border:1px solid var(--line); }
+    .cta h2{ font-size:var(--t-h1); max-width:20ch; margin-inline:auto; }
+  </style>
+</head>
+<body>
+  <main>
+    <!-- HERO -->
+    <header class="hero">
+      <div class="hero-scan"></div>
+      <svg class="drone" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="1">
+        <path d="M100 40v120M40 80h120M55 80l-15-22M145 80l15-22M55 80l-15 22M145 80l15 22"/>
+        <circle cx="100" cy="100" r="10"/><circle cx="40" cy="58" r="14"/><circle cx="160" cy="58" r="14"/>
+        <circle cx="40" cy="102" r="14"/><circle cx="160" cy="102" r="14"/>
+        <path d="M100 160l-14 20M100 160l14 20" stroke-dasharray="2 3"/>
+      </svg>
+      <div class="wrap">
+        <div class="kicker">Передовая инженерная школа СПбПУ · 15.04.03</div>
+        <h1 class="mt-m">Цифровая среда магистратуры по инжинирингу БАС</h1>
+        <p class="lead">Не ещё одна LMS. Операционное ядро сквозного проекта: команда за два года проектирует, изготавливает и валидирует собственный БПЛА с подтверждённым цифровым двойником — а платформа связывает дисциплины, артефакты, компетенции, ресурсы площадки и ИИ-помощь.</p>
+        <div class="hero-tags" id="heroTags"></div>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="tracker.html">Открыть трекер проекта →</a>
+          <a class="btn btn-ghost" href="app.html">Кабинеты: студент · РОП · директор</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- СТАТЫ -->
+    <section class="wrap">
+      <div class="grid statgrid" id="stats"></div>
+    </section>
+
+    <!-- ИДЕЯ -->
+    <section class="section wrap">
+      <div class="grid idea gap-l">
+        <div>
+          <div class="kicker">Принцип</div>
+          <h2 class="mt-s" style="font-size:var(--t-h1)">Один растущий артефакт вместо работ «в стол»</h2>
+          <p class="muted mt-m">Каждая дисциплina добавляет к общему изделию конкретный результат — расчёт, модель, узел, документ. К защите всё складывается в летающий образец и его двойник. Аналитика учебного плана — уже готовая модель данных платформы:</p>
+        </div>
+        <div class="grid gap-s">
+          <div class="maprow"><b>Карта владения темами</b><div class="muted">→ граф знаний и защита от дублей</div></div>
+          <div class="maprow"><b>Дисциплина → артефакт</b><div class="muted">→ реестр сквозного проекта</div></div>
+          <div class="maprow"><b>Стадии С1–С4</b><div class="muted">→ пайплайн проекта во времени</div></div>
+          <div class="maprow"><b>Цепочка V&V (ГОСТ Р 57700)</b><div class="muted">→ чек-листы достоверности на приёмке</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- УЧЕБНЫЙ ПЛАН -->
+    <section class="section wrap">
+      <div class="flex between wrap-w gap-m" style="align-items:flex-end">
+        <div>
+          <div class="kicker">Учебный план · 120 з.е.</div>
+          <h2 class="mt-s" style="font-size:var(--t-h1)">Дисциплины программы</h2>
+        </div>
+        <div class="mono dim" style="font-size:var(--t-sm)">кликните фильтр — раскладка по модулям и семестрам</div>
+      </div>
+      <div class="filters mt-l" id="filters"></div>
+      <div class="grid disc-grid" id="discs"></div>
+    </section>
+
+    <!-- РОЛИ + СТАДИИ -->
+    <section class="section wrap">
+      <div class="kicker">Сквозной проект</div>
+      <h2 class="mt-s" style="font-size:var(--t-h1)">Команда 3–5 человек · 5 ролей · 4 семестра</h2>
+      <div class="roles-row mt-l" id="roles"></div>
+      <div class="grid stages mt-l" id="stages"></div>
+    </section>
+
+    <!-- ИИ-АГЕНТЫ -->
+    <section class="section wrap">
+      <div class="kicker">Опорный ИИ-помощник</div>
+      <h2 class="mt-s" style="font-size:var(--t-h1)">Агенты платформы</h2>
+      <p class="muted mt-s" style="max-width:60ch">Единая RAG-база: РПД, материалы дисциплin, ГОСТ Р 57700, нормы лётной годности, данные «Снегиря», артефакты команды. Наставник по задачам — с честным контуром: помогает решить, не решая за студента.</p>
+      <div class="grid agents-grid mt-l" id="agents"></div>
+    </section>
+
+    <!-- ПРЕИМУЩЕСТВА -->
+    <section class="section wrap">
+      <div class="kicker">Против конкурентов</div>
+      <h2 class="mt-s" style="font-size:var(--t-h1)">Чем программа сильнее</h2>
+      <div class="grid edge-grid mt-l" id="edge"></div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section wrap" id="postupit">
+      <div class="cta hud panel">
+        <div class="kicker">Набор 2026</div>
+        <h2 class="mt-s">Магистратура стартует в сентябре 2026</h2>
+        <p class="muted mt-m" style="max-width:52ch;margin-inline:auto">Очно, 2 года, 120 з.е., двойная квалификация. Реальное ОКБ, семейство «Снегирь», платформа CML-Bench, собственный БПЛА команды на защите.</p>
+        <div class="flex center gap-m" style="justify-content:center;margin-top:2rem">
+          <a class="btn btn-primary" href="tracker.html">Смотреть, как строят БПЛА →</a>
+          <a class="btn btn-ghost" href="app.html">Заглянуть в платформу</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/ui.js"></script>
+  <script>
+    const D = window.DATA;
+    mountNav("index.html");
+
+    // hero-теги
+    const tags = [D.PROGRAM.form, D.PROGRAM.years+" года", D.PROGRAM.ze+" з.е.", "двойная квалификация", "ОКБ · «Снегирь»", "CML-Bench"];
+    document.getElementById("heroTags").append(...tags.map(t =>
+      el("span",{class:"chip"}, el("i",{class:"dot",style:"color:var(--cyan)"}), t)));
+
+    // статы
+    const stats = [
+      [D.PROGRAM.ze, "зачётных единиц"],
+      [D.D.length, "дисциплин в каталоге"],
+      ["30", "з.е. проектной деятельности"],
+      ["4", "стадии сквозного проекта"],
+    ];
+    document.getElementById("stats").append(...stats.map(([n,l]) =>
+      el("div",{class:"panel stat"}, el("div",{class:"stat-num"},n), el("div",{class:"lbl"},l))));
+
+    // фильтры + дисциплины
+    const modFilters = [["all","Все"]].concat(D.MODULES.map(m=>[m.code,m.code]));
+    const semFilters = [[0,"все семестры"],[1,"С1"],[2,"С2"],[3,"С3"],[4,"С4"]];
+    let curMod="all", curSem=0;
+    const fbox=document.getElementById("filters");
+    modFilters.forEach(([k,t])=>{
+      fbox.append(el("button",{class:"fbtn"+(k==="all"?" on":""),"data-m":k,onclick:()=>{curMod=k;sync();render();}},t));
+    });
+    fbox.append(el("span",{style:"width:1px;background:var(--line-2);margin:0 .3rem"}));
+    semFilters.forEach(([k,t])=>{
+      fbox.append(el("button",{class:"fbtn"+(k===0?" on":""),"data-s":k,onclick:()=>{curSem=k;sync();render();}},t));
+    });
+    function sync(){
+      fbox.querySelectorAll("[data-m]").forEach(b=>b.classList.toggle("on",b.dataset.m===curMod));
+      fbox.querySelectorAll("[data-s]").forEach(b=>b.classList.toggle("on",+b.dataset.s===curSem));
+    }
+    function render(){
+      const box=document.getElementById("discs"); box.innerHTML="";
+      const list=D.D.filter(d=>(curMod==="all"||d.module===curMod)&&(curSem===0||d.sem===curSem));
+      if(!list.length){ box.append(el("div",{class:"dim"},"нет дисциплин под фильтр")); return; }
+      list.forEach(d=>{
+        box.append(el("div",{class:"panel disc"},
+          el("div",{class:"code"},d.code),
+          el("div",{class:"nm"},d.name),
+          el("div",{class:"meta"},
+            el("span",{class:"chip"},d.ze+" з.е."),
+            el("span",{class:"chip",style:"color:var("+stageColor(d.sem)+")"},
+              el("i",{class:"dot"}),"С"+d.sem),
+            d.core?el("span",{class:"chip",style:"color:var(--amber)"},"расч. ядро"):null)));
+      });
+    }
+    render();
+
+    // роли
+    document.getElementById("roles").append(...D.ROLES.map(r=>
+      el("div",{class:"panel role"}, el("span",{class:"ic"},r.icon),
+        el("div",{}, el("div",{style:"font-weight:600"},r.name),
+          el("div",{class:"dim",style:"font-size:var(--t-xs)"},r.scope)))));
+
+    // стадии
+    document.getElementById("stages").append(...D.STAGES.map(s=>
+      el("div",{class:"panel stage",style:"border-top-color:var("+s.var+")"},
+        el("div",{class:"flex between center"}, el("span",{class:"tg",style:"color:var("+s.var+")"},s.tag),
+          el("span",{class:"chip"},s.goal)),
+        el("div",{style:"font-weight:600;margin-top:.6rem"},s.name),
+        el("div",{class:"rz"},s.result))));
+
+    // агенты
+    document.getElementById("agents").append(...D.AGENTS.map(a=>
+      el("div",{class:"panel agent hud"},
+        el("div",{class:"flex between center gap-s"}, el("h3",{},a.name),
+          el("span",{class:"chip",style:"color:var(--cyan-dim)"},a.tag)),
+        el("div",{class:"d"},a.desc))));
+
+    // преимущества
+    document.getElementById("edge").append(...D.EDGE.map(e=>
+      el("div",{class:"panel edge"}, el("div",{style:"font-weight:600"},e.t),
+        el("div",{class:"dim",style:"font-size:var(--t-sm);margin-top:.4rem"},e.d))));
+
+    mountFooter();
+  </script>
+</body>
+</html>

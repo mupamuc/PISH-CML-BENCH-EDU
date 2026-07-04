@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Кабинеты платформы · ПИШ ЦИ БАС</title>
+  <meta name="description" content="Кликабельный прототип кабинетов: студент, преподаватель, РОП, директор.">
+  <link rel="stylesheet" href="assets/theme.css">
+  <style>
+    .roleswitch{ position:sticky; top:62px; z-index:40; background:var(--bg-2); border-bottom:1px solid var(--line); }
+    .rs-in{ width:min(1180px,92vw); margin-inline:auto; display:flex; gap:.4rem; overflow-x:auto; padding:.7rem 0; }
+    .rtab{ font-family:var(--mono); font-size:var(--t-sm); padding:.55rem 1rem; border-radius:var(--radius);
+      border:1px solid var(--line-2); background:transparent; color:var(--text-mut); cursor:pointer; white-space:nowrap;
+      transition:all var(--dur) var(--ease); display:flex; gap:.5rem; align-items:center; }
+    .rtab:hover{ color:var(--text); border-color:var(--cyan-dim); }
+    .rtab.on{ background:var(--cyan); color:oklch(18% .03 250); border-color:var(--cyan); font-weight:600; }
+
+    .view{ padding-block:2rem 4rem; }
+    .vhead{ margin-bottom:1.6rem; }
+    .vhead h1{ font-size:var(--t-h1); }
+
+    .cols{ display:grid; gap:1rem; }
+    .c2{ grid-template-columns:1.4fr 1fr; } .c3{ grid-template-columns:repeat(3,1fr); }
+    @media(max-width:880px){ .c2,.c3{ grid-template-columns:1fr; } }
+
+    .card{ padding:1.2rem; }
+    .card h3{ font-size:var(--t-h3); margin-bottom:.9rem; display:flex; justify-content:space-between; align-items:center; gap:.5rem; }
+    .li{ display:flex; gap:.7rem; align-items:baseline; padding:.55rem 0; border-bottom:1px solid var(--line); }
+    .li:last-child{ border-bottom:none; }
+    .li .tm{ font-family:var(--mono); font-size:var(--t-xs); color:var(--cyan-dim); flex:none; width:64px; }
+    .li .tag{ margin-left:auto; }
+
+    .kpi{ display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; }
+    @media(max-width:720px){ .kpi{ grid-template-columns:repeat(2,1fr); } }
+    .kpi .k{ padding:1.1rem; } .kpi .n{ font-family:var(--mono); font-size:1.9rem; color:var(--cyan); font-weight:600; }
+    .kpi .l{ font-size:var(--t-sm); color:var(--text-mut); margin-top:.3rem; }
+
+    /* тепловая карта */
+    .heat{ width:100%; border-collapse:collapse; font-size:var(--t-sm); }
+    .heat th,.heat td{ padding:.5rem .6rem; text-align:center; border:1px solid var(--line); }
+    .heat th:first-child,.heat td:first-child{ text-align:left; font-family:var(--mono); font-size:var(--t-xs); }
+    .cell{ width:34px; height:22px; border-radius:3px; display:inline-block; }
+
+    /* radar */
+    .radar-wrap{ display:flex; gap:1.5rem; align-items:center; flex-wrap:wrap; }
+
+    /* чат */
+    .chat{ display:flex; flex-direction:column; gap:.8rem; }
+    .msg{ padding:.8rem 1rem; border-radius:var(--radius-lg); max-width:88%; font-size:var(--t-sm); line-height:1.5; }
+    .msg.ai{ background:var(--surface-2); border:1px solid var(--line); align-self:flex-start; }
+    .msg.u{ background:oklch(80% .13 205 / .14); border:1px solid var(--cyan-dim); align-self:flex-end; }
+    .msg .who{ font-family:var(--mono); font-size:var(--t-xs); color:var(--cyan-dim); margin-bottom:.3rem; }
+    .qchips{ display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.6rem; }
+    .qchip{ font-size:var(--t-xs); font-family:var(--mono); padding:.35rem .7rem; border:1px solid var(--line-2);
+      border-radius:100px; background:transparent; color:var(--text-mut); cursor:pointer; }
+    .qchip:hover{ border-color:var(--cyan-dim); color:var(--cyan); }
+
+    /* чек-лист V&V */
+    .vv{ display:flex; flex-direction:column; gap:.5rem; }
+    .vvrow{ display:flex; gap:.6rem; align-items:center; padding:.5rem .7rem; border:1px solid var(--line); border-radius:var(--radius); }
+    .vvrow .box{ width:18px;height:18px;border-radius:3px;border:1.5px solid var(--line-2); flex:none; display:grid; place-items:center; cursor:pointer; font-size:.8rem; }
+    .vvrow.done .box{ background:var(--ok); border-color:var(--ok); color:oklch(18% .03 250); }
+    .vvrow.done span{ color:var(--text-mut); }
+
+    .note{ font-size:var(--t-xs); color:var(--text-dim); font-family:var(--mono); }
+    .toggle{ width:38px;height:22px;border-radius:100px;background:var(--surface-2);border:1px solid var(--line-2);position:relative;cursor:pointer; flex:none; }
+    .toggle::after{ content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--text-dim);transition:all var(--dur) var(--ease); }
+    .toggle.on{ background:var(--cyan); border-color:var(--cyan); }
+    .toggle.on::after{ left:18px; background:oklch(18% .03 250); }
+    .demo-banner{ font-family:var(--mono);font-size:var(--t-xs);color:var(--amber);border:1px dashed var(--amber);
+      border-radius:var(--radius);padding:.5rem .8rem;display:inline-block; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="roleswitch">
+      <div class="rs-in" id="roles"></div>
+    </div>
+    <section class="wrap view" id="view"></section>
+  </main>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/ui.js"></script>
+  <script>
+    const D = window.DATA;
+    mountNav("app.html");
+
+    const ROLES=[
+      ["student","🎓 Студент"],["teacher","📐 Преподаватель"],
+      ["rop","🗂 РОП"],["dir","📊 Директор"]
+    ];
+    let cur="student";
+    const rbox=document.getElementById("roles");
+    ROLES.forEach(([k,l])=>rbox.append(el("button",{class:"rtab"+(k===cur?" on":""),"data-r":k,
+      onclick:()=>{cur=k;syncR();render();}},l)));
+    function syncR(){ rbox.querySelectorAll(".rtab").forEach(b=>b.classList.toggle("on",b.dataset.r===cur)); }
+
+    const V=document.getElementById("view");
+    function head(k,t,s){ return el("div",{class:"vhead"}, el("div",{class:"kicker"},k),
+      el("h1",{class:"mt-s"},t), s?el("p",{class:"muted mt-s"},s):null); }
+    function card(title,extra,...kids){ return el("div",{class:"panel card hud"},
+      el("h3",{},el("span",{},title),extra||null),...kids); }
+
+    function render(){ V.innerHTML=""; ({student:vStudent,teacher:vTeacher,rop:vRop,dir:vDir}[cur])(); }
+
+    /* ——— СТУДЕНТ ——— */
+    function vStudent(){
+      V.append(head("Личный кабинет · Ковалёв А., команда «Стриж»","Сегодня, среда","Роль в команде: расчётчик · Стадия проекта: С1 — замысел и аванпроект"));
+      // KPI
+      V.append(el("div",{class:"kpi",style:"margin-bottom:1rem"},
+        kpi("3","занятия сегодня"), kpi("2","дедлайна Moodle"),
+        kpi("34%","прогресс проекта"), kpi("58%","компетенции С1")));
+      // 2 колонки
+      V.append(el("div",{class:"cols c2"},
+        el("div",{class:"cols",style:"gap:1rem"},
+          card("Лента дня · единый календарь", el("span",{class:"note"},"очное + Moodle + проект"),
+            liItem("09:00","Лекция · Вычислительная механика (К.М.02.01.02)","аудитория","var(--cyan)"),
+            liItem("11:00","Практикум · первая КЭ-модель узла","проект","var(--amber)"),
+            liItem("14:00","Moodle · тест по теории упругости","дедлайн","var(--rose)"),
+            liItem("16:00","Бронь: разрывная машина, лаб. ОКБ","площадка","var(--lime)")),
+          card("Мой проект · артефакты С1", el("a",{href:"tracker.html",class:"chip"},"трекер →"),
+            ...D.ARTIFACTS.filter(a=>a.sem===1).map((a,i)=>
+              el("div",{class:"li"},
+                el("span",{class:"tm"},a.disc.replace("К.М.","")),
+                el("span",{},a.art),
+                el("span",{class:"tag chip",style:"color:"+(i<3?"var(--ok)":"var(--text-dim)")},
+                  el("i",{class:"dot"}),i<3?"принят":"в работе"))))),
+        el("div",{class:"cols",style:"gap:1rem"},
+          card("Компетенции · радар 7 направлений", null, radar()),
+          card("ИИ-тьютор", el("span",{class:"chip",style:"color:var(--cyan-dim)"},"честный контур"), chat())
+        )));
+    }
+    function kpi(n,l){ return el("div",{class:"panel k"}, el("div",{class:"n"},n), el("div",{class:"l"},l)); }
+    function liItem(tm,txt,tag,c){ return el("div",{class:"li"},
+      el("span",{class:"tm"},tm), el("span",{},txt),
+      el("span",{class:"tag chip",style:"color:"+c}, el("i",{class:"dot"}), tag)); }
+
+    function radar(){
+      const axes=["Аэродинамика","Нагрузки","Прочность","Композиты","ИИ/данные","Цифр. двойник","Оптимизация"];
+      const vals=[.5,.35,.7,.4,.55,.6,.45];
+      const cx=120,cy=120,R=90,N=axes.length;
+      const pt=(i,r)=>[cx+r*Math.cos(-Math.PI/2+i*2*Math.PI/N), cy+r*Math.sin(-Math.PI/2+i*2*Math.PI/N)];
+      let grid="",poly="",labels="";
+      [.25,.5,.75,1].forEach(g=>{ let p=axes.map((_,i)=>pt(i,R*g).join(",")).join(" ");
+        grid+=`<polygon points="${p}" fill="none" stroke="oklch(40% .03 250)" stroke-width=".5"/>`; });
+      poly=axes.map((_,i)=>pt(i,R*vals[i]).join(",")).join(" ");
+      axes.forEach((a,i)=>{ const[x,y]=pt(i,R+16);
+        labels+=`<text x="${x}" y="${y}" fill="oklch(72% .02 250)" font-size="8" text-anchor="middle" font-family="monospace">${a}</text>`; });
+      const svg=`<svg viewBox="0 0 240 240" width="240" height="240" role="img" aria-label="радар компетенций">
+        ${grid}<polygon points="${poly}" fill="oklch(80% .13 205 / .22)" stroke="var(--cyan)" stroke-width="1.5"/>
+        ${axes.map((_,i)=>{const[x,y]=pt(i,R*vals[i]);return `<circle cx="${x}" cy="${y}" r="2.5" fill="var(--cyan)"/>`}).join("")}
+        ${labels}</svg>`;
+      return el("div",{class:"radar-wrap"}, rawSvg(svg),
+        el("div",{}, el("div",{class:"note"},"подтверждается артефактами,"),
+          el("div",{class:"note"},"не самооценкой"),
+          el("div",{class:"chip mt-m",style:"color:var(--amber)"},"разрыв: нагрузки, композиты")));
+    }
+
+    function chat(){
+      const wrap=el("div",{class:"chat"});
+      const feed=el("div",{class:"chat"});
+      wrap.append(feed);
+      addMsg(feed,"ai","Тьютор","Разберём диаграмму V-n для твоего изделия? Могу объяснить построение огибающей нагрузок и проверить твой ход — но посчитаешь ты сам.");
+      const q=["Объясни, откуда берётся n_max","Построй формулу маневренной перегрузки","Проверь мой расчёт скорости сваливания"];
+      const chips=el("div",{class:"qchips"}, ...q.map(t=>el("button",{class:"qchip",onclick:()=>{
+        addMsg(feed,"u","Студент",t);
+        setTimeout(()=>addMsg(feed,"ai","Тьютор",aiReply(t)),250);
+      }},t)));
+      wrap.append(chips);
+      return wrap;
+    }
+    function addMsg(feed,who,name,txt){ feed.append(el("div",{class:"msg "+who},
+      el("div",{class:"who"},name), el("span",{},txt))); }
+    function aiReply(t){
+      if(t.includes("n_max")) return "n_max задаётся нормами лётной годности для класса БАС и расчётным случаем маневра. Смотри владельца темы — «Полётные и наземные нагрузки» (К.М.02.03.02). Попробуй сам найти класс своего изделия по массе — какой у «Стрижа»?";
+      if(t.includes("формулу")) return "Маневренная перегрузка: n = L / (m·g), где L — подъёмная сила на маневре. Через C_L и скоростной напор: n = (ρ·V²·S·C_Lmax)/(2·m·g). Подставь свои ρ, S, m — что получается на V_A?";
+      return "Скорость сваливания: V_s = √(2·m·g / (ρ·S·C_Lmax)). Пришли свои числа — проверю ход, но итог посчитай сам и скажи размерность.";
+    }
+
+    /* ——— ПРЕПОДАВАТЕЛЬ ——— */
+    function vTeacher(){
+      V.append(head("Кабинет преподавателя · Вычислительная механика (К.М.02.01.02)","Приёмка артефактов и настройка ИИ",
+        "Границы дисциплины (из карты владения): излагаете МКЭ, сетки, сходимость, верификацию. Не дублируете CFD и композиты — их владельцы другие."));
+      V.append(el("div",{class:"cols c2"},
+        card("Приёмка артефакта · «Стриж»: первая КЭ-модель узла",
+          el("span",{class:"chip",style:"color:var(--amber)"},"V&V чек-лист"),
+          el("p",{class:"muted",style:"font-size:var(--t-sm)"},"Расчётный артефакт не закрывается, пока не заполнена цепочка достоверности по ГОСТ Р 57700:"),
+          vvList(),
+          el("div",{class:"flex gap-m mt-m"},
+            el("button",{class:"btn btn-primary",onclick:tryAccept},"Принять артефакт"),
+            el("button",{class:"btn btn-ghost"},"Вернуть на доработку")),
+          el("div",{id:"acceptMsg",class:"note mt-s"})),
+        el("div",{class:"cols",style:"gap:1rem"},
+          card("Настройка ИИ-наставника для моего задания",null,
+            toggleRow("Наставник включён для задания","on"),
+            el("div",{class:"li"},el("span",{},"Режим помощи"),
+              el("span",{class:"tag chip",style:"color:var(--cyan)"},"подсказки по нарастающей")),
+            el("div",{class:"li"},el("span",{},"Готовое решение оцениваемого задания"),
+              el("span",{class:"tag chip",style:"color:var(--rose)"},"запрещено")),
+            toggleRow("Показывать студенту эталонные задачи","on"),
+            toggleRow("Разбор ошибок в ходе решения","on"),
+            el("p",{class:"note mt-s"},"Принцип: ИИ помогает решить, решение принимает студент.")),
+          card("Сигналы по группе · где буксуют",null,
+            barLine("Сеточная сходимость",72,"var(--rose)"),
+            barLine("Оценка погрешности",55,"var(--amber)"),
+            barLine("Постановка граничных условий",30,"var(--lime)"),
+            el("p",{class:"note mt-s"},"18 студентов · агрегировано, обезличенно. Тема «сходимость» — кандидат на доп. разбор."))
+      )));
+    }
+    function vvList(){
+      const items=["Сеточная сходимость показана (мин. 3 сетки)","Оценка погрешности приведена",
+        "Проверка на эталонной задаче","Постановка соответствует физике","Данные модели оформлены как актив"];
+      const box=el("div",{class:"vv"});
+      items.forEach((t,i)=>{ const done=i<2;
+        const row=el("div",{class:"vvrow"+(done?" done":"")},
+          el("span",{class:"box",onclick:()=>{row.classList.toggle("done");}}, done?"✓":""),
+          el("span",{},t));
+        box.append(row); });
+      return box;
+    }
+    function tryAccept(){
+      const rows=[...document.querySelectorAll(".vvrow")];
+      const all=rows.every(r=>r.classList.contains("done"));
+      const m=document.getElementById("acceptMsg");
+      if(all){ m.style.color="var(--ok)"; m.textContent="✓ Артефакт принят, компетенция подтверждена, двойник обновлён."; }
+      else{ m.style.color="var(--rose)"; m.textContent="✕ Нельзя принять: не закрыта цепочка достоверности V&V ("+rows.filter(r=>!r.classList.contains("done")).length+" пункта)."; }
+    }
+    function toggleRow(t,on){ const tg=el("div",{class:"toggle"+(on?" on":""),onclick:function(){this.classList.toggle("on");}});
+      return el("div",{class:"li"}, el("span",{},t), el("span",{class:"tag"},tg)); }
+    function barLine(t,v,c){ return el("div",{style:"margin:.5rem 0"},
+      el("div",{class:"flex between",style:"font-size:var(--t-sm);margin-bottom:.3rem"},el("span",{},t),el("span",{class:"mono"},v+"%")),
+      el("div",{class:"bar"}, el("i",{style:"width:"+v+"%;background:"+c}))); }
+
+    /* ——— РОП ——— */
+    function vRop(){
+      V.append(head("Кабинет РОП · руководитель образовательной программы","Трекинг когорты и развитие плана",
+        "4 команды · 18 студентов · семестр 1"));
+      V.append(el("div",{class:"kpi",style:"margin-bottom:1rem"},
+        kpi("4","команды"), kpi("1","в зоне риска"), kpi("3","дубля тем найдено"), kpi("6","пробелов плана")));
+      V.append(el("div",{class:"cols c2"},
+        card("Тепловая карта · команды × стадии артефактов",null, heat()),
+        el("div",{class:"cols",style:"gap:1rem"},
+          card("РПД-контур · дубли против карты владения",el("span",{class:"chip",style:"color:var(--amber)"},"ИИ-разбор"),
+            dupRow("CFD-раздел","К.М.03.01.05","дублируется в РПД К.М.03.01.04","risk"),
+            dupRow("Метод конечных элементов","К.М.02.01.02","повтор в 2 РПД профиля","warn"),
+            dupRow("Критерии разрушения композита","К.М.03.01.06","корректно, без повторов","ok"),
+            el("p",{class:"note mt-s"},"ИИ находит — РОП подтверждает. Владелец темы читает, потребитель применяет.")),
+          card("Развитие программы · пробелы плана",el("span",{class:"chip"},"из аналитики"),
+            ...D.GAPS.map(g=>el("div",{class:"li"},
+              el("span",{},g.t),
+              el("span",{class:"tag chip",style:"color:"+(g.pr==="высокий"?"var(--rose)":"var(--amber)")},g.pr))))
+      )));
+    }
+    function heat(){
+      const teams=D.TEAMS;
+      const t=el("table",{class:"heat"});
+      const cols=["арт.С1","арт.С2","арт.С3","арт.С4"];
+      t.append(el("tr",{}, el("th",{},"команда"), ...cols.map(c=>el("th",{},c)), el("th",{},"риск")));
+      teams.forEach(tm=>{
+        const row=el("tr",{}, el("td",{},tm.name));
+        [1,2,3,4].forEach(s=>{
+          let v = s<tm.stage?1 : s===tm.stage?tm.progress/100 : 0;
+          const c = v>=.9?"var(--lime)": v>=.4?"var(--amber)": v>0?"var(--rose)":"var(--surface-2)";
+          row.append(el("td",{}, el("span",{class:"cell",style:"background:"+c,title:Math.round(v*100)+"%"})));
+        });
+        row.append(el("td",{}, el("i",{class:"dot",style:"color:"+riskColor(tm.risk)})));
+        t.append(row);
+      });
+      return t;
+    }
+    function dupRow(topic,owner,verdict,st){ return el("div",{class:"li"},
+      el("span",{}, el("b",{},topic), el("div",{class:"note"},owner+" · "+verdict)),
+      el("span",{class:"tag chip",style:"color:"+riskColor(st)}, el("i",{class:"dot"}),
+        st==="ok"?"ок":st==="warn"?"проверить":"дубль")); }
+
+    /* ——— ДИРЕКТОР ——— */
+    function vDir(){
+      V.append(head("Аналитика директора","Цифровой двойник программы","Соответствие план ↔ факт по когорте 2026"));
+      V.append(el("div",{class:"kpi",style:"margin-bottom:1rem"},
+        kpi("87%","успеваемость"), kpi("94%","вовлечённость"),
+        kpi("4/4","команды в проекте"), kpi("62%","загрузка площадки")));
+      V.append(el("div",{class:"cols c2"},
+        card("Стадии проектов когорты",null,
+          barLine("С1 — замысел и аванпроект",100,"var(--cyan)"),
+          barLine("С2 — эскизный/технический",8,"var(--violet)"),
+          barLine("С3 — образец",0,"var(--amber)"),
+          barLine("С4 — валидация/защита",0,"var(--lime)"),
+          el("p",{class:"note mt-s"},"Когорта на С1. Внутрисеместровый календарь С2 (аэродинамика→нагрузки→прочность→оптимизация) готов.")),
+        el("div",{class:"cols",style:"gap:1rem"},
+          card("Покрытие компетенций программой",null,
+            barLine("Расчётно-инженерное ядро",88,"var(--lime)"),
+            barLine("Цифровые двойники / V&V",64,"var(--amber)"),
+            barLine("Автономность / GNC",38,"var(--rose)"),
+            barLine("Организация производства",82,"var(--lime)")),
+          card("Ресурсы площадки · использование",el("a",{href:"index.html",class:"chip"},"каталог"),
+            barLine("Анизопринтинг / композиты",71,"var(--cyan)"),
+            barLine("Испытательные машины",44,"var(--amber)"),
+            barLine("HIL-стенд / CML-Bench",59,"var(--cyan)"),
+            barLine("Лётная зона",22,"var(--lime)"))),
+        card("Гранты, НИОКР, конкурсы · когорта",el("span",{class:"chip",style:"color:var(--cyan-dim)"},"скаут"),
+          el("div",{class:"cols c3",style:"gap:1rem"},
+            kpi("5","поданных заявок"), kpi("2","поддержано"), kpi("1.2М","₽ привлечено"))))
+      );
+      V.append(el("div",{class:"demo-banner mt-l"},"демо · цифры синтетические для показа руководству"));
+    }
+
+    render();
+    mountFooter();
+  </script>
+</body>
+</html>

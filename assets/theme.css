@@ -1,0 +1,176 @@
+/* ПИШ ЦИ БАС — платформа: дизайн-система «инженерная телеметрия» */
+
+:root {
+  /* палитра — тёмная приборная */
+  --bg:        oklch(15% 0.02 250);
+  --bg-2:      oklch(18% 0.025 250);
+  --surface:   oklch(21% 0.028 250);
+  --surface-2: oklch(25% 0.03 250);
+  --line:      oklch(32% 0.03 250);
+  --line-2:    oklch(42% 0.035 250);
+
+  --text:      oklch(96% 0.008 250);
+  --text-mut:  oklch(72% 0.02 250);
+  --text-dim:  oklch(56% 0.02 250);
+
+  --cyan:      oklch(80% 0.13 205);
+  --cyan-dim:  oklch(62% 0.10 205);
+  --amber:     oklch(82% 0.14 78);
+  --lime:      oklch(84% 0.17 135);
+  --rose:      oklch(72% 0.16 18);
+  --violet:    oklch(74% 0.13 300);
+
+  /* семантика стадий/статусов */
+  --s1: var(--cyan);
+  --s2: var(--violet);
+  --s3: var(--amber);
+  --s4: var(--lime);
+
+  --ok:   var(--lime);
+  --warn: var(--amber);
+  --risk: var(--rose);
+
+  /* типографика */
+  --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
+
+  --t-hero: clamp(2.6rem, 1.2rem + 5.6vw, 6rem);
+  --t-h1:   clamp(1.9rem, 1.2rem + 2.4vw, 3rem);
+  --t-h2:   clamp(1.4rem, 1.05rem + 1.2vw, 2rem);
+  --t-h3:   clamp(1.1rem, 0.98rem + 0.5vw, 1.35rem);
+  --t-base: clamp(0.98rem, 0.94rem + 0.2vw, 1.08rem);
+  --t-sm:   0.85rem;
+  --t-xs:   0.74rem;
+
+  --sp:     clamp(4rem, 2.5rem + 5vw, 9rem);
+  --radius: 4px;
+  --radius-lg: 8px;
+
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur: 320ms;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: var(--t-base);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  /* сетка-чертёж */
+  background-image:
+    linear-gradient(oklch(50% 0.02 250 / 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(50% 0.02 250 / 0.04) 1px, transparent 1px);
+  background-size: 42px 42px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; scroll-behavior: auto; }
+}
+
+h1, h2, h3 { line-height: 1.12; font-weight: 640; letter-spacing: -0.02em; margin: 0; }
+p { margin: 0 0 1rem; }
+a { color: var(--cyan); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.mono { font-family: var(--mono); }
+.kicker {
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--cyan-dim);
+}
+.muted { color: var(--text-mut); }
+.dim { color: var(--text-dim); }
+
+.wrap { width: min(1180px, 92vw); margin-inline: auto; }
+.section { padding-block: var(--sp); }
+
+/* ——— шапка ——— */
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  backdrop-filter: blur(14px);
+  background: oklch(15% 0.02 250 / 0.78);
+  border-bottom: 1px solid var(--line);
+}
+.nav-in {
+  display: flex; align-items: center; gap: 1.5rem;
+  height: 62px;
+  width: min(1180px, 92vw); margin-inline: auto;
+}
+.brand { display: flex; align-items: center; gap: 0.7rem; font-weight: 680; letter-spacing: -0.02em; }
+.brand .glyph { width: 26px; height: 26px; color: var(--cyan); }
+.nav-links { display: flex; gap: 1.4rem; margin-left: auto; font-size: var(--t-sm); }
+.nav-links a { color: var(--text-mut); }
+.nav-links a:hover, .nav-links a.active { color: var(--text); text-decoration: none; }
+.nav-cta {
+  font-family: var(--mono); font-size: var(--t-xs); letter-spacing: 0.05em;
+  padding: 0.5rem 0.9rem; border: 1px solid var(--cyan-dim); border-radius: var(--radius);
+  color: var(--cyan); transition: background var(--dur) var(--ease);
+}
+.nav-cta:hover { background: oklch(80% 0.13 205 / 0.12); text-decoration: none; }
+.burger { display: none; }
+
+/* ——— панели/карточки ——— */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  position: relative;
+}
+.panel.hud::before, .panel.hud::after {
+  content: ""; position: absolute; width: 10px; height: 10px;
+  border-color: var(--cyan-dim); border-style: solid; opacity: 0.7;
+}
+.panel.hud::before { top: 7px; left: 7px; border-width: 1px 0 0 1px; }
+.panel.hud::after { bottom: 7px; right: 7px; border-width: 0 1px 1px 0; }
+
+.chip {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-family: var(--mono); font-size: var(--t-xs);
+  padding: 0.22rem 0.55rem; border-radius: 100px;
+  border: 1px solid var(--line-2); color: var(--text-mut);
+  white-space: nowrap;
+}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; flex: none; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-family: var(--mono); font-size: var(--t-sm); letter-spacing: 0.02em;
+  padding: 0.7rem 1.2rem; border-radius: var(--radius);
+  border: 1px solid transparent; cursor: pointer; transition: all var(--dur) var(--ease);
+}
+.btn-primary { background: var(--cyan); color: oklch(18% 0.03 250); font-weight: 600; }
+.btn-primary:hover { filter: brightness(1.08); text-decoration: none; }
+.btn-ghost { border-color: var(--line-2); color: var(--text); background: transparent; }
+.btn-ghost:hover { border-color: var(--cyan-dim); color: var(--cyan); text-decoration: none; }
+
+.grid { display: grid; gap: 1rem; }
+.stat-num { font-family: var(--mono); font-size: clamp(1.8rem, 1rem + 2.5vw, 2.8rem); color: var(--cyan); font-weight: 600; line-height: 1; }
+
+/* прогресс-бар */
+.bar { height: 6px; border-radius: 100px; background: var(--surface-2); overflow: hidden; }
+.bar > i { display: block; height: 100%; border-radius: 100px; background: var(--cyan); }
+
+footer.site {
+  border-top: 1px solid var(--line); padding-block: 3rem; color: var(--text-dim); font-size: var(--t-sm);
+}
+
+/* утилиты */
+.flex { display: flex; }
+.between { justify-content: space-between; }
+.center { align-items: center; }
+.gap-s { gap: 0.5rem; } .gap-m { gap: 1rem; } .gap-l { gap: 2rem; }
+.wrap-w { flex-wrap: wrap; }
+.mt-s{margin-top:.5rem}.mt-m{margin-top:1rem}.mt-l{margin-top:2rem}
+.hide { display: none !important; }
+
+@media (max-width: 780px) {
+  .nav-links { display: none; }
+}
