@@ -23,7 +23,8 @@
     .pcell .n{ font-size:var(--t-sm); color:var(--text-mut); margin-top:.3rem; }
     .pcell .cnt{ font-family:var(--mono); font-size:var(--t-xs); color:var(--text-dim); margin-top:.6rem; }
 
-    .teams{ grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); }
+    .teams{ grid-template-columns:repeat(2,1fr); }
+    @media(max-width:760px){ .teams{ grid-template-columns:1fr; } }
     .team{ padding:1.3rem; cursor:pointer; transition:transform var(--dur) var(--ease),border-color var(--dur) var(--ease); }
     .team:hover{ transform:translateY(-3px); border-color:var(--cyan-dim); }
     .team .top{ display:flex; justify-content:space-between; align-items:flex-start; gap:.6rem; }
@@ -59,6 +60,8 @@
     </section>
 
     <section class="section wrap" style="padding-top:0">
+      <div class="kicker">Команды когорты 2026</div>
+      <h2 style="font-size:var(--t-h2);margin:.3rem 0 1.4rem">Трекер проекта БПЛА</h2>
       <div class="grid teams" id="teams"></div>
     </section>
   </main>
