@@ -26,6 +26,14 @@ window.CRM = (function () {
     { id: "minobr-niokr", title: "НИОКР по БАС", org: "Минобрнауки", type: "НИОКР", deadline: "2027-01-15", amount: "по конкурсу", url: "https://minobrnauki.gov.ru", tags: ["БАС", "НИОКР", "сертификац", "мониторинг", "VTOL"], desc: "Прикладные НИОКР: аппараты вертикального взлёта, сертификация, мониторинг." },
   ];
 
+  // пул для авто-скаута (заглушка: «новые» находки при обновлении ленты)
+  const EXTRA_GRANTS = [
+    { id: "president", title: "Гранты Президента РФ для молодых учёных", org: "Совет по грантам", type: "грант", deadline: "2026-11-01", amount: "600 тыс–1.5 млн ₽", url: "https://grants.extech.ru", tags: ["наука", "цифровой двойник", "прочность", "аэродинамик"], desc: "Поддержка молодых кандидатов и докторов наук." },
+    { id: "sirius", title: "Конкурс «Большие вызовы»", org: "Сириус / НТИ", type: "конкурс", deadline: "2026-09-20", amount: "стажировки, гранты", url: "https://sochisirius.ru", tags: ["БПЛА", "ИИ", "автономн", "мониторинг"], desc: "Проектный конкурс по направлениям, включая БАС и ИИ." },
+    { id: "ick-avia", title: "ИЦК «Авиастроение» · пилот", org: "Минцифры / ИЦК", type: "НИОКР", deadline: "2026-12-01", amount: "софинансирование", url: "https://digital.gov.ru", tags: ["авиа", "цифровой двойник", "сертификац", "ПО"], desc: "Пилотные внедрения отечественного инженерного ПО и двойников." },
+    { id: "voshod", title: "Венчурный фонд «Восход» · deeptech", org: "Восход", type: "инвестиции", deadline: "2027-02-15", amount: "раунд", url: "https://voskhod.vc", tags: ["стартап", "БПЛА", "логистика", "автономн"], desc: "Инвестиции в deeptech-стартапы, включая беспилотную логистику." },
+  ];
+
   const ASSIGNEES = ["РОП", "Команда «Стриж»", "Команда «Капля»", "Команда «Сокол»", "Команда «Гриф»", "Преподаватель (ВМ)", "Студент-лид заявки"];
   const STATUSES = [
     ["новая", "var(--text-dim)"], ["назначена", "var(--cyan)"], ["в работе", "var(--amber)"],
@@ -37,6 +45,16 @@ window.CRM = (function () {
   let kws = load(LS.kw, DEFAULT_KW.slice());
   let tickets = load(LS.sd, []);
   let chat = load(LS.chat, seedChat());
+  let revealed = load("crm_revealed", []);
+  let scoutRuns = load("crm_scout", 0);
+  const allGrants = () => GRANTS.concat(EXTRA_GRANTS.filter(g => revealed.includes(g.id)));
+  const newestId = () => revealed[revealed.length - 1];
+  function runScout() {
+    scoutRuns++; save("crm_scout", scoutRuns);
+    const next = EXTRA_GRANTS.find(g => !revealed.includes(g.id));
+    if (next) { revealed.push(next.id); save("crm_revealed", revealed); }
+    return next;
+  }
 
   function seedChat() {
     return {
@@ -72,9 +90,10 @@ window.CRM = (function () {
     });
   }
   function relevantGrants() {
-    return GRANTS.map(g => ({ g, hits: matchKw(g), projects: matchProjects(g) }))
+    const nid = newestId();
+    return allGrants().map(g => ({ g, hits: matchKw(g), projects: matchProjects(g), nw: g.id === nid }))
       .filter(x => x.hits.length > 0)
-      .sort((a, b) => b.hits.length - a.hits.length || a.g.deadline.localeCompare(b.g.deadline));
+      .sort((a, b) => (b.nw - a.nw) || (b.hits.length - a.hits.length) || a.g.deadline.localeCompare(b.g.deadline));
   }
 
   // ---- рендер ----
@@ -90,7 +109,12 @@ window.CRM = (function () {
     // 1) грант-радар
     const radar = E("div", { class: "panel card hud" },
       E("h3", {}, E("span", {}, "Гранты, НИОКР, конкурсы · радар"),
-        E("span", { class: "chip", style: "color:var(--brand-2)" }, "скаут по ключевым словам")));
+        E("span", { class: "flex gap-s center" },
+          E("span", { class: "chip", style: "color:var(--brand-2)" }, "скаут по ключевым словам"),
+          E("button", { class: "btn btn-primary btn-sm", onclick: () => {
+            const n = runScout(); renderGrants();
+            if (n) postSystem("grants", "Скаут: новая находка — «" + n.title + "» (" + n.org + "), срок " + n.deadline);
+          } }, "🔄 Обновить ленту"))));
     radar.append(kwEditor());
     refs.grants = E("div", {});
     radar.append(refs.grants);
@@ -104,7 +128,7 @@ window.CRM = (function () {
     row.append(refs.sd, refs.chat);
     root.append(row);
     renderSD();
-    renderChat();
+    chatPanel(refs.chat, "Директор");
   }
 
   function kwEditor() {
@@ -134,11 +158,14 @@ window.CRM = (function () {
     const list = refs.grants; list.innerHTML = "";
     const rel = relevantGrants();
     list.append(E("div", { class: "note", style: "margin:.6rem 0" },
-      "Релевантных: " + rel.length + " из " + GRANTS.length + " · отсортировано по совпадениям и сроку"));
-    rel.forEach(({ g, hits, projects }) => {
+      "Релевантных: " + rel.length + " из " + allGrants().length +
+      " · скаут: проверок " + scoutRuns + ", добавлено новых " + revealed.length +
+      (revealed.length < EXTRA_GRANTS.length ? " · «Обновить» найдёт ещё" : " · новых пока нет")));
+    rel.forEach(({ g, hits, projects, nw }) => {
       const card = E("div", { class: "grant" },
         E("div", { class: "grant-head" },
-          E("div", {}, E("b", {}, g.title), E("span", { class: "dim", style: "font-size:var(--t-xs)" }, "  " + g.org)),
+          E("div", {}, nw ? E("span", { class: "chip", style: "color:var(--lime);margin-right:.4rem" }, "NEW") : null,
+            E("b", {}, g.title), E("span", { class: "dim", style: "font-size:var(--t-xs)" }, "  " + g.org)),
           E("span", { class: "chip", style: "color:var(--violet)" }, g.type)),
         E("div", { class: "grant-meta" },
           E("span", { class: "chip" }, "срок: " + g.deadline),
@@ -211,35 +238,44 @@ window.CRM = (function () {
       E("div", { class: "note", style: "margin-bottom:.25rem" }, label), ctrl);
   }
 
-  // ---- чат ----
-  function renderChat() {
-    const box = refs.chat; box.innerHTML = ""; box.className = "panel card hud";
-    box.append(E("h3", {}, E("span", {}, "Коммуникации · чат"),
-      E("span", { class: "chip", style: "color:var(--cyan-dim)" }, "роли")));
-    const chans = E("div", { class: "ch-list" });
-    chat.channels.forEach(c => chans.append(
-      E("button", { class: "ch-item" + (c.id === curChannel ? " on" : ""), onclick: () => { curChannel = c.id; renderChat(); } }, c.name)));
-    box.append(chans);
-    const thread = E("div", { class: "ch-thread" });
-    (chat.msgs[curChannel] || []).forEach(m => thread.append(
-      E("div", { class: "cmsg" + (m.a === "Директор" ? " me" : "") },
-        E("div", { class: "cwho" }, m.a + " · " + m.ts), E("div", {}, m.t))));
-    box.append(thread);
-    const inp = E("input", { class: "kw-input", placeholder: "сообщение от лица Директора…", onkeydown: (e) => {
-      if (e.key === "Enter" && e.target.value.trim()) { postMsg(curChannel, "Директор", e.target.value.trim()); }
-    }});
-    box.append(E("div", { class: "chat-input" }, inp,
-      E("button", { class: "btn btn-primary btn-sm", onclick: () => { const v = inp.value.trim(); if (v) postMsg(curChannel, "Директор", v); } }, "→")));
+  // ---- чат (переиспользуемая панель; me = роль отправителя) ----
+  let activeChatDraw = null;
+  function chatPanel(box, me) {
+    let cur = (chat.channels[0] || {}).id;
+    function draw() {
+      box.innerHTML = ""; box.className = "panel card hud";
+      box.append(E("h3", {}, E("span", {}, "Коммуникации · чат"),
+        E("span", { class: "chip", style: "color:var(--cyan)" }, "вы: " + me)));
+      const chans = E("div", { class: "ch-list" });
+      chat.channels.forEach(c => {
+        const mine = !c.who || c.who.includes(me);
+        chans.append(E("button", { class: "ch-item" + (c.id === cur ? " on" : ""),
+          title: c.who ? "участники: " + c.who.join(", ") : "",
+          onclick: () => { cur = c.id; draw(); } }, c.name + (mine ? "" : " ·")));
+      });
+      box.append(chans);
+      const thread = E("div", { class: "ch-thread" });
+      (chat.msgs[cur] || []).forEach(m => thread.append(
+        E("div", { class: "cmsg" + (m.a === me ? " me" : "") + (m.a === "Система" ? " sys" : "") },
+          E("div", { class: "cwho" }, m.a + " · " + m.ts), E("div", {}, m.t))));
+      box.append(thread);
+      const inp = E("input", { class: "kw-input", placeholder: "сообщение от лица «" + me + "»…", onkeydown: (e) => {
+        if (e.key === "Enter" && e.target.value.trim()) postMsg(cur, me, e.target.value.trim());
+      }});
+      box.append(E("div", { class: "chat-input" }, inp,
+        E("button", { class: "btn btn-primary btn-sm", onclick: () => { const v = inp.value.trim(); if (v) postMsg(cur, me, v); } }, "→")));
+    }
+    activeChatDraw = draw;
+    draw();
   }
-  function nowHM() { return "—"; } // без Date в детерм.среде; метка условная
   function postMsg(ch, author, text) {
     (chat.msgs[ch] = chat.msgs[ch] || []).push({ a: author, t: text, ts: "сейчас" });
-    save(LS.chat, chat); renderChat();
+    save(LS.chat, chat); if (activeChatDraw) activeChatDraw();
   }
   function postSystem(ch, text) {
     (chat.msgs[ch] = chat.msgs[ch] || []).push({ a: "Система", t: text, ts: "сейчас" });
-    save(LS.chat, chat);
+    save(LS.chat, chat); if (activeChatDraw) activeChatDraw();
   }
 
-  return { mount };
+  return { mount, mountChat: chatPanel };
 })();

@@ -171,6 +171,7 @@
     .cmsg{ background:var(--surface-2); border:1px solid var(--line); border-radius:var(--radius-lg);
       padding:.5rem .7rem; font-size:var(--t-sm); align-self:flex-start; max-width:90%; }
     .cmsg.me{ background:color-mix(in oklab,var(--brand) 14%,transparent); border-color:var(--cyan-dim); align-self:flex-end; }
+    .cmsg.sys{ align-self:center; background:transparent; border:1px dashed var(--line-2); color:var(--text-dim); font-size:var(--t-xs); }
     .cwho{ font-family:var(--mono); font-size:.62rem; color:var(--cyan-dim); margin-bottom:.2rem; }
     .chat-input{ display:flex; gap:.5rem; margin-top:.7rem; }
     .chat-input .kw-input{ flex:1; }
@@ -202,7 +203,7 @@
 
     const ROLES=[
       ["student","🎓 Студент"],["teacher","📐 Преподаватель"],
-      ["rop","🗂 РОП"],["dir","📊 Директор"]
+      ["rop","🗂 РОП"],["dir","📊 Директор"],["chat","💬 Чат"]
     ];
     let cur="student";
     const rbox=document.getElementById("roles");
@@ -223,7 +224,22 @@
     function render(){
       V.innerHTML="";
       if(cur==="student" && studentDisc){ V.append(buildDisciplineDetail(studentDisc, backToStudent)); if(window.annotateTerms) annotateTerms(V); return; }
-      ({student:vStudent,teacher:vTeacher,rop:vRop,dir:vDir}[cur])();
+      ({student:vStudent,teacher:vTeacher,rop:vRop,dir:vDir,chat:vChat}[cur])();
+    }
+    let chatMe = "Студент";
+    function vChat(){
+      V.append(head("Коммуникации","Чат участников программы",
+        "Единые каналы: студенты, преподаватели, РОП, директор. Сообщения общие для всех ролей."));
+      const roles=["Студент","Преподаватель","РОП","Директор"];
+      const picker=el("div",{class:"flex gap-s wrap-w",style:"margin-bottom:1rem;align-items:center"},
+        el("span",{class:"note"},"войти как:"));
+      roles.forEach(r=>picker.append(el("button",{class:"ch-item"+(r===chatMe?" on":""),
+        onclick:()=>{ chatMe=r; render(); }}, r)));
+      V.append(picker);
+      const root=el("div",{style:"max-width:760px"});
+      V.append(root);
+      if(window.CRM) window.CRM.mountChat(root, chatMe);
+      else root.append(el("div",{class:"dim"},"чат-модуль не загружен"));
     }
     // сброс детали при смене роли
     ROLES.forEach(([k])=>{}); // (переключение роли уже вызывает render через rtab)
