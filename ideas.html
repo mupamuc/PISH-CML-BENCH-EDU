@@ -17,6 +17,26 @@
     .i-stat b{ font-family:var(--mono); font-size:1.5rem; color:var(--cyan); font-weight:600; }
     .i-stat span{ display:block; font-size:var(--t-xs); color:var(--text-dim); font-family:var(--mono); }
 
+    /* трекер активности — рядом с графом */
+    .i-activity{ display:flex; gap:1.4rem; align-items:center; padding:.9rem 1.2rem; margin-bottom:1rem;
+      flex-wrap:wrap; }
+    .i-pulse{ display:flex; align-items:center; gap:.5rem; font-family:var(--mono); font-size:var(--t-xs);
+      color:var(--text-dim); flex:none; }
+    .i-pulse .dot{ background:var(--ok); box-shadow:0 0 0 0 color-mix(in oklab,var(--ok) 60%,transparent);
+      animation:pulse 2s infinite; }
+    @keyframes pulse{
+      0%{ box-shadow:0 0 0 0 color-mix(in oklab,var(--ok) 55%,transparent); }
+      70%{ box-shadow:0 0 0 6px color-mix(in oklab,var(--ok) 0%,transparent); }
+      100%{ box-shadow:0 0 0 0 color-mix(in oklab,var(--ok) 0%,transparent); }
+    }
+    .i-counters{ display:flex; gap:1.3rem; flex:none; }
+    .i-counters .i-stat b{ font-size:1.1rem; }
+    .i-ticker{ flex:1 1 260px; min-width:0; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;
+      font-size:var(--t-sm); color:var(--text-mut); border-left:1px solid var(--line); padding-left:1.2rem; }
+    .i-ticker b{ color:var(--text); font-weight:600; }
+    .i-ticker .dim{ margin-left:.4rem; }
+    @media (max-width:780px){ .i-ticker{ border-left:none; padding-left:0; flex-basis:100%; order:3; } }
+
     /* граф + панель */
     .i-board{ display:grid; grid-template-columns: minmax(0,1fr) 360px; gap:1rem; align-items:start; }
     @media (max-width: 900px){ .i-board{ grid-template-columns:1fr; } }
@@ -69,6 +89,24 @@
     .how-card .term{ color:var(--cyan); border-bottom:1px dashed var(--cyan-dim); }
     .notice{ font-size:var(--t-sm); color:var(--text-mut); background:var(--bg-2);
       border-left:3px solid var(--amber); padding:.8rem 1rem; border-radius:var(--radius); margin-top:1rem; }
+
+    /* список идей */
+    .i-list-tools{ display:flex; gap:.6rem; flex-wrap:wrap; align-items:center; margin:1rem 0 1.2rem; }
+    .fbtn{ font-family:var(--mono); font-size:var(--t-xs); padding:.4rem .75rem; border:1px solid var(--line-2);
+      border-radius:100px; background:transparent; color:var(--text-mut); cursor:pointer; transition:all var(--dur) var(--ease); }
+    .fbtn:hover{ color:var(--text); border-color:var(--cyan-dim); }
+    .fbtn.on{ background:var(--cyan); color:var(--on-accent); border-color:var(--cyan); font-weight:600; }
+    .i-list-sort{ margin-left:auto; display:flex; gap:.4rem; }
+    .idea-row{ display:flex; gap:.9rem; align-items:flex-start; padding:.85rem 0; border-top:1px solid var(--line);
+      cursor:pointer; transition:background var(--dur) var(--ease); }
+    .idea-row:first-child{ border-top:none; }
+    .idea-row:hover{ background:var(--bg-2); }
+    .idea-row .ir-kind{ flex:none; font-size:1.1rem; line-height:1.4; width:1.4rem; text-align:center; }
+    .idea-row .ir-body{ flex:1; min-width:0; }
+    .idea-row .ir-title{ font-weight:600; font-size:var(--t-sm); }
+    .idea-row .ir-meta{ font-size:var(--t-xs); color:var(--text-dim); font-family:var(--mono); margin-top:.2rem; }
+    .idea-row .ir-nums{ flex:none; display:flex; gap:.7rem; font-family:var(--mono); font-size:var(--t-xs);
+      color:var(--text-mut); white-space:nowrap; }
   </style>
 </head>
 <body>
@@ -98,6 +136,15 @@
 
     <!-- Граф + панель -->
     <section class="wrap">
+      <div class="panel hud i-activity">
+        <span class="i-pulse"><span class="dot"></span>ЖИВАЯ ЛЕНТА</span>
+        <div class="i-counters">
+          <div class="i-stat"><b id="act-ideas">0</b><span>идей</span></div>
+          <div class="i-stat"><b id="act-comments">0</b><span>комментариев</span></div>
+          <div class="i-stat"><b id="act-votes">0</b><span>голосов</span></div>
+        </div>
+        <div class="i-ticker" id="i-ticker">Пока тихо — будьте первым.</div>
+      </div>
       <div class="i-board">
         <div class="panel hud i-graph">
           <svg id="graph-svg" viewBox="0 0 1000 660" role="img"
@@ -117,6 +164,23 @@
             </div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- Список идей -->
+    <section class="wrap mt-l">
+      <div class="panel hud" style="padding:1.4rem">
+        <div class="flex between center wrap-w gap-m">
+          <div class="kicker">Список идей</div>
+          <span class="dim mono" id="list-count" style="font-size:var(--t-xs)"></span>
+        </div>
+        <div class="i-list-tools" id="list-filters">
+          <div class="i-list-sort">
+            <button class="fbtn on" data-sort="new">новые</button>
+            <button class="fbtn" data-sort="top">популярные</button>
+          </div>
+        </div>
+        <div id="idea-list"></div>
       </div>
     </section>
 

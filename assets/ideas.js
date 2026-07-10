@@ -14,7 +14,7 @@
     { id: "general",      label: "Общее / другое",        hue: "var(--cyan)" },
   ];
 
-  const state = { ideas: [], comments: [], voteCount: {}, myVotes: new Set(), openIdeaId: null };
+  const state = { ideas: [], comments: [], voteCount: {}, myVotes: new Set(), openIdeaId: null, sort: "new" };
 
   /* ————— утилиты ————— */
   const $ = (id) => document.getElementById(id);
@@ -50,6 +50,8 @@
       $("g-offline")?.classList.add("hide");
       syncGraph();
       renderStats();
+      renderActivity();
+      renderList();
       if (state.openIdeaId) renderPanel(state.openIdeaId);
     } catch (e) {
       $("g-offline")?.classList.remove("hide");
@@ -304,9 +306,92 @@
 
   /* ————— счётчики ————— */
   function renderStats() {
+    const votes = Object.values(state.voteCount).reduce((a, b) => a + b, 0);
     $("stat-ideas").textContent = state.ideas.length;
     $("stat-comments").textContent = state.comments.length;
-    $("stat-votes").textContent = Object.values(state.voteCount).reduce((a, b) => a + b, 0);
+    $("stat-votes").textContent = votes;
+    $("act-ideas").textContent = state.ideas.length;
+    $("act-comments").textContent = state.comments.length;
+    $("act-votes").textContent = votes;
+  }
+
+  /* ————— трекер активности: живая мини-лента последнего события ————— */
+  function renderActivity() {
+    const events = [];
+    for (const i of state.ideas) events.push({
+      time: i.created_at,
+      html: "<b>" + escapeHtml(i.author) + "</b> " + (i.kind === "critique" ? "покритиковал" : "предложил идею") +
+        " «" + escapeHtml(i.title) + "»",
+    });
+    for (const c of state.comments) events.push({
+      time: c.created_at,
+      html: "<b>" + escapeHtml(c.author) + "</b> прокомментировал идею",
+    });
+    events.sort((a, b) => new Date(b.time) - new Date(a.time));
+    const box = $("i-ticker");
+    if (!events.length) { box.textContent = "Пока тихо — будьте первым."; return; }
+    const last = events[0];
+    box.innerHTML = last.html + " <span class=\"dim\">· " + timeAgo(last.time) + "</span>";
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  }
+
+  /* ————— список идей: фильтр по разделу + сортировка ————— */
+  function initList() {
+    const box = $("list-filters");
+    const sortBox = box.querySelector(".i-list-sort");
+    const secChips = el("div", { class: "flex gap-s wrap-w" });
+    box.insertBefore(secChips, sortBox);
+
+    const chip = (label, fn) => el("button", { class: "fbtn", onclick: fn }, label);
+    function setSectionFilter(id, btn) {
+      state.sectionFilter = id;
+      secChips.querySelectorAll(".fbtn").forEach((b) => b.classList.remove("on"));
+      btn.classList.add("on");
+      renderList();
+    }
+    const allBtn = chip("все разделы", () => setSectionFilter(null, allBtn));
+    allBtn.classList.add("on");
+    secChips.append(allBtn);
+    window.IDEAS_SECTIONS.forEach((s) => {
+      const b = chip(s.label, () => setSectionFilter(s.id, b));
+      secChips.append(b);
+    });
+
+    sortBox.querySelectorAll(".fbtn").forEach((b) =>
+      b.addEventListener("click", () => {
+        state.sort = b.dataset.sort;
+        sortBox.querySelectorAll(".fbtn").forEach((x) => x.classList.remove("on"));
+        b.classList.add("on");
+        renderList();
+      }));
+  }
+
+  function renderList() {
+    const box = $("idea-list");
+    if (!box) return;
+    let items = state.ideas.slice();
+    if (state.sectionFilter) items = items.filter((i) => i.section === state.sectionFilter);
+    items.sort((a, b) => state.sort === "top"
+      ? (state.voteCount[b.id] || 0) - (state.voteCount[a.id] || 0)
+      : new Date(b.created_at) - new Date(a.created_at));
+    $("list-count").textContent = items.length + " " + plural(items.length, "идея", "идеи", "идей");
+    box.innerHTML = "";
+    if (!items.length) { box.append(el("div", { class: "dim", style: "padding:.8rem 0" }, "Пока пусто.")); return; }
+    for (const idea of items) {
+      const sec = sectionById(idea.section);
+      const cCount = state.comments.filter((c) => c.idea_id === idea.id).length;
+      box.append(el("div", { class: "idea-row", onclick: () => openIdea(idea.id) },
+        el("span", { class: "ir-kind" }, idea.kind === "critique" ? "⚠" : "💡"),
+        el("div", { class: "ir-body" },
+          el("div", { class: "ir-title" }, idea.title),
+          el("div", { class: "ir-meta" }, sec.label + " · " + idea.author + " · " + timeAgo(idea.created_at))),
+        el("div", { class: "ir-nums" },
+          el("span", {}, "👍 " + (state.voteCount[idea.id] || 0)),
+          el("span", {}, "💬 " + cCount))));
+    }
   }
 
   /* ————— лента GitHub на человеческом языке ————— */
@@ -383,6 +468,7 @@
   window.initIdeasPage = function () {
     initGraph();
     initForm();
+    initList();
     if (!window.COLLAB.ready) {
       $("g-nocfg").classList.remove("hide");
       $("f-send").disabled = true;
