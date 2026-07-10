@@ -38,6 +38,23 @@
       ["glossary.html", "Глоссарий"],
       ["ideas.html", "Идеи"],
     ];
+    // мобильное меню (бургер, ≤780px)
+    const mobile = el("div", { class: "nav-mobile", id: "nav-mobile" },
+      ...links.map(([h, t]) =>
+        el("a", { href: h, class: active === h ? "active" : "" }, t)),
+      el("a", { class: "m-cta", href: "#postupit", onclick: gotoPostupit }, "Поступить →"));
+    const burger = el("button", {
+      class: "burger", "aria-label": "Открыть меню",
+      "aria-expanded": "false", "aria-controls": "nav-mobile",
+      onclick: () => {
+        const open = mobile.classList.toggle("open");
+        burger.setAttribute("aria-expanded", String(open));
+        burger.setAttribute("aria-label", open ? "Закрыть меню" : "Открыть меню");
+        burger.innerHTML = open ? X_ICON : BURGER_ICON;
+      },
+    });
+    burger.innerHTML = BURGER_ICON;
+
     const nav = el("nav", { class: "nav" },
       el("div", { class: "nav-in" },
         el("a", { class: "brand", href: "index.html", style: "color:inherit" }, logoEl(34)),
@@ -45,11 +62,16 @@
           ...links.map(([h, t]) =>
             el("a", { href: h, class: active === h ? "active" : "" }, t))),
         el("a", { class: "nav-cta", href: "#postupit", onclick: gotoPostupit }, "Поступить →"),
+        burger,
         themeBtn()
-      )
+      ),
+      mobile
     );
     document.body.prepend(nav);
   };
+
+  const BURGER_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>`;
+  const X_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>`;
 
   // иконки темы
   const SUN = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg>`;

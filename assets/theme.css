@@ -173,7 +173,14 @@ img.logo-dark  { display: none; }
   color: var(--cyan); transition: background var(--dur) var(--ease);
 }
 .nav-cta:hover { background: oklch(80% 0.13 205 / 0.12); text-decoration: none; }
-.burger { display: none; }
+.burger {
+  display: none; background: transparent; cursor: pointer;
+  border: 1px solid var(--line-2); border-radius: var(--radius);
+  width: 40px; height: 40px; color: var(--text);
+  align-items: center; justify-content: center; flex: none;
+}
+.burger svg { width: 22px; height: 22px; }
+.nav-mobile { display: none; }
 
 /* ——— панели/карточки ——— */
 .panel {
@@ -230,7 +237,21 @@ footer.site {
 .hide { display: none !important; }
 
 @media (max-width: 780px) {
-  .nav-links { display: none; }
+  .nav-links, .nav-cta { display: none; }
+  .burger { display: inline-flex; margin-left: auto; }
+  .nav-mobile.open {
+    display: flex; flex-direction: column;
+    width: min(1180px, 92vw); margin-inline: auto;
+    padding: 0.4rem 0 0.9rem; border-top: 1px solid var(--line);
+  }
+  .nav-mobile a {
+    padding: 0.65rem 0.2rem; color: var(--text-mut); font-size: 1.02rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-mobile a:last-child { border-bottom: none; }
+  .nav-mobile a.active { color: var(--text); font-weight: 600; }
+  .nav-mobile a:hover { text-decoration: none; color: var(--text); }
+  .nav-mobile .m-cta { color: var(--cyan); font-family: var(--mono); font-size: var(--t-sm); }
 }
 
 /* термины-тултипы */

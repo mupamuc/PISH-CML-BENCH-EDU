@@ -22,6 +22,12 @@
     @media (max-width: 900px){ .i-board{ grid-template-columns:1fr; } }
     .i-graph{ padding:.6rem; overflow:hidden; }
     .i-graph svg{ width:100%; height:auto; display:block; }
+    @media (max-width:700px){
+      .i-graph{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
+      .i-graph svg{ min-width:680px; }
+      .i-legend{ position:sticky; left:0; }
+      #panel{ min-height:0; }
+    }
     .i-legend{ display:flex; gap:1rem; flex-wrap:wrap; padding:.4rem .8rem .7rem; font-size:var(--t-xs);
       color:var(--text-dim); font-family:var(--mono); }
     .i-legend i{ display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:.35rem; }

@@ -22,7 +22,8 @@
       err.status = res.status;
       throw err;
     }
-    return res.status === 204 ? null : res.json();
+    const text = await res.text();
+    return text ? JSON.parse(text) : null; // 201/204 могут приходить с пустым телом
   }
 
   // анонимный идентификатор устройства (для защиты от повторного голоса)
