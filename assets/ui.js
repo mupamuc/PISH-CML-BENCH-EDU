@@ -22,7 +22,7 @@
   window.logoEl = function (h) {
     const wrap = el("span", { class: "brand-logo", style: "display:inline-flex;align-items:center" });
     const light = el("img", { class: "logo-light", src: "assets/img/logo_color.png",
-      alt: "Цифровой инжиниринг · ПИШ СПбПУ" });
+      alt: "Магистратура ПИШ «Системный цифровой инжиниринг БАС»" });
     const dark = el("img", { class: "logo-dark", src: "assets/img/logo_white.png", alt: "" });
     if (h) { light.style.height = h + "px"; dark.style.height = h + "px"; }
     wrap.append(light, dark);
