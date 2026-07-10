@@ -12,7 +12,8 @@
   <link rel="stylesheet" href="assets/theme.css">
   <style>
     .hero { position: relative; padding-block: clamp(3rem,2rem+6vw,7rem) var(--sp); overflow: clip; }
-    .hero h1 { font-size: var(--t-hero); max-width: 16ch; }
+    .hero h1 { font-size: clamp(1.9rem, 1rem + 3.4vw, 3.5rem); max-width: 40ch; }
+    .hero h1 .q { color: var(--cyan); }
     .hero .lead { font-size: var(--t-h3); color: var(--text-mut); max-width: 52ch; margin-top: 1.4rem; }
     .hero-tags { display:flex; gap:.6rem; flex-wrap:wrap; margin-top: 2rem; }
     .hero-cta { display:flex; gap:1rem; flex-wrap:wrap; margin-top: 2.4rem; }
@@ -82,9 +83,8 @@
       </svg>
       <div class="wrap">
         <div class="kicker">Передовая инженерная школа СПбПУ · 15.04.03</div>
-        <h1 class="mt-m">Цифровая среда магистратуры ПИШ</h1>
-        <p class="mono" style="color:var(--cyan-dim);font-size:var(--t-sm);margin:.4rem 0 0">«Системный цифровой инжиниринг БАС»</p>
-        <p class="lead mt-m">Не ещё одна LMS. Операционное ядро сквозного проекта: команда за два года проектирует, изготавливает и валидирует собственный БПЛА с подтверждённым цифровым двойником — а платформа связывает дисциплины, артефакты, компетенции, ресурсы площадки и ИИ-помощь.</p>
+        <h1 class="mt-m">Цифровая среда магистратуры ПИШ<br><span class="q">«Системный цифровой инжиниринг БАС»</span></h1>
+        <p class="lead">Не ещё одна LMS. Операционное ядро сквозного проекта: команда за два года проектирует, изготавливает и валидирует собственный БПЛА с подтверждённым цифровым двойником — а платформа связывает дисциплины, артефакты, компетенции, ресурсы площадки и ИИ-помощь.</p>
         <div class="hero-tags" id="heroTags"></div>
         <div class="hero-cta">
           <a class="btn btn-primary" href="tracker.html">Открыть трекер проекта →</a>
