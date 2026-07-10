@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Идеи экспертов · ПИШ ЦИ · Цифровые двойники и инжиниринг БАС</title>
+  <meta name="description" content="Агрегатор экспертных мнений: живой граф идей и комментариев к платформе, история изменений проекта, как участвовать.">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script>(function(){var t;try{t=localStorage.getItem("theme")}catch(e){}document.documentElement.setAttribute("data-theme",t==="dark"?"dark":"light")})();</script>
+  <link rel="stylesheet" href="assets/theme.css">
+  <style>
+    .i-head{ padding-block: clamp(2.5rem,1.5rem+4vw,4.5rem) 1.2rem; }
+    .i-head h1{ font-size:var(--t-h1); max-width:24ch; }
+    .i-stats{ display:flex; gap:1.6rem; margin-top:1.4rem; flex-wrap:wrap; }
+    .i-stat b{ font-family:var(--mono); font-size:1.5rem; color:var(--cyan); font-weight:600; }
+    .i-stat span{ display:block; font-size:var(--t-xs); color:var(--text-dim); font-family:var(--mono); }
+
+    /* граф + панель */
+    .i-board{ display:grid; grid-template-columns: minmax(0,1fr) 360px; gap:1rem; align-items:start; }
+    @media (max-width: 900px){ .i-board{ grid-template-columns:1fr; } }
+    .i-graph{ padding:.6rem; overflow:hidden; }
+    .i-graph svg{ width:100%; height:auto; display:block; }
+    .i-legend{ display:flex; gap:1rem; flex-wrap:wrap; padding:.4rem .8rem .7rem; font-size:var(--t-xs);
+      color:var(--text-dim); font-family:var(--mono); }
+    .i-legend i{ display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:.35rem; }
+
+    .g-link{ stroke:var(--line-2); stroke-width:1; }
+    .g-node{ cursor:pointer; }
+    .g-sec-ring{ fill:none; stroke:var(--line-2); stroke-dasharray:3 3; }
+    .g-sec-dot{ opacity:.9; }
+    .g-sec-label{ font-family:var(--cond); font-size:13px; fill:var(--text-mut); }
+    .g-idea-dot{ fill:var(--cyan); opacity:.92; transition:opacity .2s; }
+    .g-idea-dot.g-crit{ fill:var(--amber); }
+    .g-node:hover .g-idea-dot{ opacity:1; stroke:var(--text); stroke-width:1.5; }
+    .g-com-dot{ fill:var(--text-dim); opacity:.75; }
+
+    #panel{ padding:1.2rem; min-height:280px; }
+    .p-com{ border-top:1px solid var(--line); padding:.55rem 0; font-size:var(--t-sm); }
+
+    /* форма */
+    .i-form{ padding:1.4rem; }
+    .c-inp{ width:100%; margin-top:.5rem; padding:.6rem .8rem; border:1px solid var(--line-2);
+      border-radius:var(--radius); background:var(--bg-2); color:var(--text); font:inherit; font-size:var(--t-sm); }
+    .c-inp:focus{ outline:none; border-color:var(--cyan-dim); }
+    textarea.c-inp{ resize:vertical; }
+    .f-grid{ display:grid; grid-template-columns:1fr 1fr; gap:.8rem; }
+    @media (max-width:700px){ .f-grid{ grid-template-columns:1fr; } }
+    .f-kind label{ display:inline-flex; align-items:center; gap:.4rem; margin-right:1.2rem;
+      font-size:var(--t-sm); cursor:pointer; }
+
+    /* лента GitHub */
+    .gh-item{ display:flex; gap:.8rem; padding:.6rem 0; border-top:1px solid var(--line); align-items:baseline; }
+    .gh-ico{ flex:none; width:1.6rem; text-align:center; color:var(--cyan); }
+
+    /* как участвовать */
+    .how-grid{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; align-items:start; }
+    @media (max-width:900px){ .how-grid{ grid-template-columns:1fr; } }
+    .how-card{ padding:1.4rem; }
+    .how-card ol{ margin:.8rem 0 0; padding-left:1.2rem; font-size:var(--t-sm); line-height:1.65; }
+    .how-card li{ margin-bottom:.55rem; }
+    .how-card .term{ color:var(--cyan); border-bottom:1px dashed var(--cyan-dim); }
+    .notice{ font-size:var(--t-sm); color:var(--text-mut); background:var(--bg-2);
+      border-left:3px solid var(--amber); padding:.8rem 1rem; border-radius:var(--radius); margin-top:1rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <!-- Шапка -->
+    <section class="wrap i-head">
+      <div class="kicker">Экспертный совет · открытое обсуждение</div>
+      <h1 class="mt-s">Идеи и мнения экспертов — вживую</h1>
+      <p class="muted mt-m" style="max-width:66ch">
+        Это общая доска платформы. Любой эксперт по этой ссылке может <b>предложить идею</b>,
+        <b>покритиковать</b> существующие решения и <b>прокомментировать</b> чужие предложения —
+        без регистрации, просто представившись. Всё появляется на графе ниже мгновенно, у всех сразу.
+      </p>
+      <div class="i-stats">
+        <div class="i-stat"><b id="stat-ideas">0</b><span>идей</span></div>
+        <div class="i-stat"><b id="stat-comments">0</b><span>комментариев</span></div>
+        <div class="i-stat"><b id="stat-votes">0</b><span>голосов «поддержать»</span></div>
+      </div>
+      <div id="g-nocfg" class="notice hide">
+        Хранилище идей ещё не подключено — форма пока выключена.
+        Владелец проекта: инструкция на 5 минут — <a href="docs/SETUP-SUPABASE.md">docs/SETUP-SUPABASE.md</a>.
+      </div>
+      <div id="g-offline" class="notice hide">
+        Не удаётся связаться с хранилищем идей. Проверьте интернет или попробуйте позже.
+      </div>
+    </section>
+
+    <!-- Граф + панель -->
+    <section class="wrap">
+      <div class="i-board">
+        <div class="panel hud i-graph">
+          <svg id="graph-svg" viewBox="0 0 1000 660" role="img"
+               aria-label="Граф идей: разделы платформы и прикреплённые к ним идеи и комментарии"></svg>
+          <div class="i-legend">
+            <span><i style="background:var(--cyan)"></i>идея</span>
+            <span><i style="background:var(--amber)"></i>критика</span>
+            <span><i style="background:var(--text-dim);width:6px;height:6px"></i>комментарий</span>
+            <span>крупные узлы — разделы платформы · клик по идее — детали</span>
+          </div>
+        </div>
+        <div class="panel hud" id="panel">
+          <div class="kicker" style="margin-bottom:.8rem">Карточка идеи</div>
+          <div id="panel-body">
+            <div class="dim" style="font-size:var(--t-sm)">
+              Нажмите на любую идею в графе — здесь появятся её текст, комментарии и кнопка «Поддержать».
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Форма -->
+    <section class="wrap mt-l" id="propose">
+      <div class="panel hud i-form">
+        <div class="kicker">Предложить идею или критику</div>
+        <p class="muted mt-s" style="font-size:var(--t-sm)">Регистрация не нужна. Представьтесь — и пишите.
+          Публикация мгновенная; имя запомнится на этом устройстве.</p>
+        <div class="f-grid">
+          <div>
+            <input id="f-name" class="c-inp" placeholder="Ваше имя (например: Иван Петров, СПбПУ)" maxlength="80">
+            <select id="f-section" class="c-inp"></select>
+            <div class="f-kind" style="margin-top:.8rem">
+              <label><input type="radio" name="f-kind" value="idea" checked> 💡 идея / предложение</label>
+              <label><input type="radio" name="f-kind" value="critique"> ⚠ критика / возражение</label>
+            </div>
+          </div>
+          <div>
+            <input id="f-title" class="c-inp" placeholder="Заголовок — одна фраза, суть идеи" maxlength="140">
+            <textarea id="f-body" class="c-inp" rows="4" maxlength="2000"
+              placeholder="Суть: что предлагаете (или что не так) и почему это важно. Можно приложить ссылку."></textarea>
+          </div>
+        </div>
+        <button id="f-send" class="btn btn-primary mt-m">Опубликовать идею</button>
+      </div>
+    </section>
+
+    <!-- Как участвовать -->
+    <section class="wrap mt-l">
+      <div class="kicker" style="margin-bottom:1rem">Как участвовать · два пути</div>
+      <div class="how-grid">
+        <div class="panel hud how-card">
+          <h3 style="font-size:1.15rem">Путь 1 — гость (проще всего)</h3>
+          <p class="muted mt-s" style="font-size:var(--t-sm)">Ничего устанавливать и нигде регистрироваться не нужно.</p>
+          <ol>
+            <li>Погуляйте по платформе: <a href="index.html">обзор</a>, <a href="tracker.html">трекер</a>,
+              <a href="app.html">кабинеты</a>, <a href="glossary.html">глоссарий</a>.</li>
+            <li>Вернитесь сюда и <a href="#propose">заполните форму</a>: имя, раздел, идея. Готово —
+              она уже на графе, и её видят все.</li>
+            <li>Нажимайте на чужие идеи: комментируйте и голосуйте «Поддержать».</li>
+          </ol>
+        </div>
+        <div class="panel hud how-card">
+          <h3 style="font-size:1.15rem">Путь 2 — через GitHub (для правок «с реализацией»)</h3>
+          <p class="muted mt-s" style="font-size:var(--t-sm)">Если готовы не только предлагать, но и вносить
+            изменения в сами страницы. Понадобится бесплатный аккаунт GitHub.</p>
+          <ol>
+            <li>Зарегистрируйтесь на <a href="https://github.com/signup" target="_blank" rel="noopener">github.com</a>
+              (почта + пароль, 2 минуты).</li>
+            <li>Откройте <a href="https://github.com/mupamuc/PISH-CML-BENCH-EDU" target="_blank" rel="noopener">страницу проекта</a>
+              и нажмите кнопку <b>Fork</b> справа сверху. <span class="term" title="Форк — ваша личная копия проекта. В ней ничего нельзя сломать: оригинал не изменится.">Форк</span> —
+              это ваша личная копия: правьте смело, оригинал не пострадает.</li>
+            <li>В своей копии найдите нужный файл (например, <span class="mono">index.html</span>),
+              нажмите на карандаш ✏ и правьте текст прямо в браузере.</li>
+            <li>Внизу нажмите <b>Commit changes</b> — это «сохранить с подписью, что и зачем изменили».</li>
+            <li>GitHub сам предложит кнопку <b>Contribute → Open pull request</b>.
+              <span class="term" title="Pull request — «предложение изменений»: автор проекта видит, что именно вы поменяли, и может принять это в основную версию.">Pull request</span> —
+              это ваше предложение владельцу проекта. Напишите пару слов, зачем правка, и отправьте.</li>
+            <li>Дальше видно здесь, в ленте ниже: предложение «ожидает проверки» → «принято в основную версию».</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- Лента GitHub -->
+    <section class="wrap mt-l" style="padding-bottom:4rem">
+      <div class="panel hud" style="padding:1.4rem">
+        <div class="flex between center wrap-w gap-m">
+          <div class="kicker">Что происходит с проектом · история изменений</div>
+          <div id="gh-stats" class="flex gap-s wrap-w"></div>
+        </div>
+        <p class="muted mt-s" style="font-size:var(--t-sm)">Живая лента из GitHub, переведённая на человеческий язык:
+          кто скопировал проект, кто предложил изменения, что принято. Обновляется раз в минуту.</p>
+        <div id="gh-feed" class="mt-m"><div class="dim">Загружаем события…</div></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
+  <script src="assets/data.js"></script>
+  <script src="assets/ui.js"></script>
+  <script src="assets/collab-config.js"></script>
+  <script src="assets/collab.js"></script>
+  <script src="assets/ideas.js"></script>
+  <script>
+    mountNav("ideas.html");
+    window.addEventListener("load", () => initIdeasPage()); // после load: supabase-js (defer) уже доступен
+    mountFooter();
+  </script>
+</body>
+</html>
