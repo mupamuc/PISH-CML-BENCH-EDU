@@ -13,7 +13,6 @@
   <style>
     .i-head{ padding-block: clamp(2.5rem,1.5rem+4vw,4.5rem) 1.2rem; }
     .i-head h1{ font-size:var(--t-h1); max-width:24ch; }
-    .i-stats{ display:flex; gap:1.6rem; margin-top:1.4rem; flex-wrap:wrap; }
     .i-stat b{ font-family:var(--mono); font-size:1.5rem; color:var(--cyan); font-weight:600; }
     .i-stat span{ display:block; font-size:var(--t-xs); color:var(--text-dim); font-family:var(--mono); }
 
@@ -120,11 +119,6 @@
         <b>покритиковать</b> существующие решения и <b>прокомментировать</b> чужие предложения —
         без регистрации, просто представившись. Всё появляется на графе ниже мгновенно, у всех сразу.
       </p>
-      <div class="i-stats">
-        <div class="i-stat"><b id="stat-ideas">0</b><span>идей</span></div>
-        <div class="i-stat"><b id="stat-comments">0</b><span>комментариев</span></div>
-        <div class="i-stat"><b id="stat-votes">0</b><span>голосов «поддержать»</span></div>
-      </div>
       <div id="g-nocfg" class="notice hide">
         Хранилище идей ещё не подключено — форма пока выключена.
         Владелец проекта: инструкция на 5 минут — <a href="docs/SETUP-SUPABASE.md">docs/SETUP-SUPABASE.md</a>.

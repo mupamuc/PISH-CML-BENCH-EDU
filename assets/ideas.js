@@ -307,9 +307,6 @@
   /* ————— счётчики ————— */
   function renderStats() {
     const votes = Object.values(state.voteCount).reduce((a, b) => a + b, 0);
-    $("stat-ideas").textContent = state.ideas.length;
-    $("stat-comments").textContent = state.comments.length;
-    $("stat-votes").textContent = votes;
     $("act-ideas").textContent = state.ideas.length;
     $("act-comments").textContent = state.comments.length;
     $("act-votes").textContent = votes;
