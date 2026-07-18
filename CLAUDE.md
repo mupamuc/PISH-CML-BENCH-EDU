@@ -6,7 +6,7 @@
 - **mupamuc/PISH-CML-BENCH-EDU** (этот репо) — доменная модель и демо-стенд магистратуры ПИШ «Системный цифровой инжиниринг БАС»: учебный план как данные, сквозной проект, V&V-приёмка, компетенции, глоссарий, грант-радар.
 - **LeVa-cloud/university-saas** — производственная платформа: WordPress-плагин `university-lk`, роли/права, instance-per-tenant (152-ФЗ), деплой на Jino.
 
-Главный документ: [docs/PLAN-university-saas-integration.md](docs/PLAN-university-saas-integration.md) — детальный план переноса идей стенда в university-saas. Любая работа сверяется с ним; изменения плана — отдельным коммитом с обоснованием.
+Главный документ: [PLAN-university-saas-integration.md в LeVa-cloud/university-saas](https://github.com/LeVa-cloud/university-saas/blob/main/docs/PLAN-university-saas-integration.md) — детальный план переноса идей стенда в university-saas. Канонический экземпляр живёт в репозитории реализации (`university-saas`); локальный [docs/PLAN-university-saas-integration.md](docs/PLAN-university-saas-integration.md) — только указатель. Любая работа сверяется с планом; изменения плана — отдельным коммитом с обоснованием.
 
 ## Правила разработки (обязательные)
 
