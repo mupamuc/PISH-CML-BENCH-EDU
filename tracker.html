@@ -59,6 +59,8 @@
       <div class="legend" id="legend"></div>
     </section>
 
+    <section class="section wrap" id="isu-live" style="padding-top:0"></section>
+
     <section class="section wrap" style="padding-top:0">
       <div class="kicker">Команды когорты 2026</div>
       <h2 style="font-size:var(--t-h2);margin:.3rem 0 1.4rem">Трекер проекта БПЛА</h2>
@@ -74,9 +76,11 @@
   <script src="assets/glossary.js"></script>
   <script src="assets/ui.js"></script>
   <script src="assets/tooltips.js"></script>
+  <script src="assets/isu-live.js"></script>
   <script>
     const D = window.DATA;
     mountNav("tracker.html");
+    mountIsuLive("isu-live");
 
     // пайплайн: сколько команд на каждой стадии
     const pipe=document.getElementById("pipe");
