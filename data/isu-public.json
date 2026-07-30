@@ -1,7 +1,38 @@
 {
-    "generated_at": "2026-07-23 21:50:53",
-    "teams": [],
-    "stages": [],
+    "generated_at": "2026-07-30 22:56:03",
+    "teams": [
+        {
+            "team": "Команда 1",
+            "stage": "P1",
+            "risk": "ok",
+            "accepted": 0,
+            "total": 0
+        },
+        {
+            "team": "Команда 2",
+            "stage": "P1",
+            "risk": "ok",
+            "accepted": 0,
+            "total": 0
+        },
+        {
+            "team": "Команда 3",
+            "stage": "P1",
+            "risk": "ok",
+            "accepted": 0,
+            "total": 0
+        },
+        {
+            "team": "Команда 4",
+            "stage": "P1",
+            "risk": "ok",
+            "accepted": 0,
+            "total": 0
+        }
+    ],
+    "stages": {
+        "P1": 4
+    },
     "competencies": {
         "total": 0,
         "uncovered": 0
