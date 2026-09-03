@@ -1,5 +1,5 @@
 {
-    "generated_at": "2026-08-20 22:45:01",
+    "generated_at": "2026-09-03 22:45:01",
     "teams": [
         {
             "team": "Команда 1",
@@ -35,7 +35,7 @@
     },
     "competencies": {
         "total": 42,
-        "uncovered": 2
+        "uncovered": 1
     },
     "disciplines": 45
 }
