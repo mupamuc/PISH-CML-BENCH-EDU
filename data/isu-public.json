@@ -1,5 +1,5 @@
 {
-    "generated_at": "2026-09-03 22:45:01",
+    "generated_at": "2026-09-24 22:45:01",
     "teams": [
         {
             "team": "Команда 1",
@@ -37,5 +37,5 @@
         "total": 42,
         "uncovered": 1
     },
-    "disciplines": 45
+    "disciplines": 78
 }
