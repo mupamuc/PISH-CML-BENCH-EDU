@@ -1,12 +1,12 @@
 {
-    "generated_at": "2026-09-24 22:45:01",
+    "generated_at": "2026-10-01 22:45:01",
     "teams": [
         {
             "team": "Команда 1",
             "stage": "P1",
             "risk": "ok",
             "accepted": 0,
-            "total": 0
+            "total": 1
         },
         {
             "team": "Команда 2",
@@ -37,5 +37,5 @@
         "total": 42,
         "uncovered": 1
     },
-    "disciplines": 78
+    "disciplines": 653
 }
